@@ -1,4 +1,4 @@
-package com.movieproject.movieapp;
+package com.project.app;
 
 
 import org.springframework.boot.SpringApplication;
@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.movieproject.controller.MovieAppController;
+import com.project.controller.AppController;
+
 
 
 @Configuration
@@ -15,7 +16,7 @@ import com.movieproject.controller.MovieAppController;
 public class Application{
 
     public static void main(String[] args) {
-    	SpringApplication.run(MovieAppController.class, args);
+    	SpringApplication.run(AppController.class, args);
     }
     
 }

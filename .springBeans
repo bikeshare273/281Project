@@ -7,12 +7,12 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>java:com.movieproject.controller.MovieAppController</config>
-		<config>java:com.movieproject.movieapp.Application</config>
+		<config>src/main/java/com/project/controller/AppController.java</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/root-context.xml</config>
+		<config>java:com.project.controller.MovieAppController</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
