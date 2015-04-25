@@ -1,0 +1,9 @@
+{
+  "name": "angular-resource",
+  "version": "1.4.0-build.3962+sha.fe9cd9d",
+  "main": "./angular-resource.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.4.0-build.3962+sha.fe9cd9d"
+  }
+}

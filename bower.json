@@ -1,0 +1,15 @@
+{
+    "name": "226Project",
+    "version": "1.0",
+    "authors": [
+        ""
+    ],
+    "description": "226 Project",
+    "dependencies": {
+        "angular": "1.4.0-build.3962+sha.fe9cd9d",
+        "bootstrap": "3.3.4",
+        "fontawesome": "~4.1.0",
+        "angular-route": "1.4.0-build.3962+sha.fe9cd9d",
+        "angular-resource": "1.4.0-build.3962+sha.fe9cd9d"
+    }
+}
