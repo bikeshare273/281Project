@@ -1,0 +1,109 @@
+<div class="container-fluid signup_container" ng-controller="registerController">
+	
+	<div style="text-align:center; color: black; font-size: 25px; padding-bottom: 5px; padding-top: 5px;">
+	Signup
+	</div>
+	
+	<div class="col-md-12">
+		
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form name="signupform">
+			
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="email" class="form-control" placeholder="Email"
+								name="signupform_email" size="50" ng-model="signupform_email" 
+								required>
+					
+					<div class="error-container"
+						ng-show="signupform.signupform_email.$dirty && signupform.signupform_email.$invalid">
+						<small class="errorbox"
+							ng-show="signupform.signupform_email.$error.required">Email address is required</small> 
+							<small class="errorbox"
+							ng-show="signupform.signupform_email.$error.email">Email id is invalid</small>
+					</div>
+					
+				</div>
+				
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="password" class="form-control" placeholder="Password" name="signupform_password"
+						ng-minlength="5" size="50" ng-model="signupform_password" required>
+						
+					<div class="error-container"
+						ng-show="signupform.signupform_password.$dirty && signupform.signupform_password.$invalid">
+							<small class="errorbox"
+							ng-show="signupform.signupform_password.$error.required">Password is required</small> 
+							<small class="errorbox"
+							ng-show="signupform.signupform_password.$error.minlength">Password must be atleast 5 character</small> 
+					</div>
+				</div>
+				
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="password" class="form-control" placeholder="Confirm Password" name="signupform_confirmpassword"
+						size="50" ng-model="signupform_confirmpassword" required password-match="signupform_password">
+						
+					<div class="error-container"
+						ng-show="signupform.signupform_confirmpassword.$dirty && signupform.signupform_confirmpassword.$invalid">
+							<small class="errorbox"
+							ng-show="signupform.signupform_confirmpassword.$error.required">Confirm Password is required</small> </br>
+							<small class="errorbox"
+							ng-show="signupform.signupform_confirmpassword.$error.unique">Passwords do not match</small> 
+					</div>
+				</div>
+				
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<input type="text" class="form-control" placeholder="Phone" name="signupform_phone" 
+						size="50" ng-model="signupform_phone" ng-minlength="10" ng-maxlength="10" required>
+					
+					<div class="error-container"
+						ng-show="signupform.signupform_phone.$dirty && signupform.signupform_phone.$invalid">
+							<small class="errorbox"
+							ng-show="signupform.signupform_phone.$error.required">Phone number is required</small> 
+							<small class="errorbox"
+							ng-show="signupform.signupform_phone.$error.minlength">Phone number is invalid</small>
+							<small class="errorbox"
+							ng-show="signupform.signupform_phone.$error.maxlength">Phone number is invalid</small>
+					</div>
+				</div>
+				
+				<div style="padding-bottom: 10px; padding-top: 10px;">
+					<select
+						id="signupform_country" class="form-control" data-role="listview"
+						ng-model="signupform_country" required>
+						<option value="">Select Country</option>
+						<option value="1">India</option>
+						<option value="2">United States</option>
+						<option value="3">China</option>
+						<option value="4">Japan</option>
+						<option value="5">South Africa</option>
+					</select>
+					
+					<div class="error-container"
+						ng-show="signupform.signupform_country.$dirty && signupform.signupform_country.$invalid">
+							<small class="errorbox"
+							ng-show="signupform.signupform_country.$error.required">Country is required</small> 
+					</div>
+				</div>
+				
+				<div class="input-group" style="padding-bottom: 5px; padding-top: 5px; text-align:center;">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" ng-click="signupform_signup()">Register</button>
+					</span>
+				</div>
+				
+				<div class="input-group" style="padding-bottom: 5px; padding-top: 5px; text-align:center;">
+					<div class="errorbox" style="position:relative;padding-top:1%;padding-left:47%;">
+					<ul>
+						<li ng-repeat="err in error">{{ err }}</li>
+					</ul>
+					</div>
+					<div class="successbox" style="position:relative;padding-top:1%;padding-left:47%;">{{signupform_success}}</div>
+				</div>
+				
+			</form>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+</div>
+
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

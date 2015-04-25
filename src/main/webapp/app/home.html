@@ -1,12 +1,46 @@
-<div ng-controller="homeController">
+<div ng-controller="homeController" class="backgroundImage" ng-style="{{image_path1}}">
 
-<div style="padding-top: 100px;">
-	<input type="text" name="username" id="username" ng-model="username"/></br>
-	<input type="button" name="welcome" id="welcome" ng-click="submitWelcomeMessage()" value="click"/>
+
+    <div class="container" id="loginbox">
+
+      <form class="loginform">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" ng-model="loginform_email" 
+	        required autofocus>
+	    <div class="error-container"
+			ng-show="loginform.loginform_email.$dirty && loginform.loginform_email.$invalid">
+			<small class="errorbox"
+				ng-show="loginform.loginform_email.$error.required">Email address is required</small> 
+				<small class="errorbox"
+				ng-show="loginform.loginform_email.$error.email">Email id is invalid</small>
+		</div>    
+	       
+        <label for="inputPassword" class="sr-only">Password</label>
+        
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="loginform_password" 
+        	required>
+         <div class="error-container"
+			ng-show="loginform.loginform_password.$dirty && loginform.loginform_password.$invalid">
+			<small class="errorbox"
+				ng-show="loginform.loginform_password.$error.required">Password is required</small> 
+		</div>    
+       
+		
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" ng-click="loginform_login()">Sign in</button>
+        <div style="text-align:center; ">
+        	<a ng-click="clickRegister()" style='color: black'>Dont have account? Register Now!!</a>
+       	</div>
+      </form>
+
+    </div> <!-- /container -->
+
+
 </div>
 
-<div>
-	{{welcomemessage}}
-</div>
-
-</div>
+<div style="padding-top: 50px;" ng-include src="'footer.html'"></div>
