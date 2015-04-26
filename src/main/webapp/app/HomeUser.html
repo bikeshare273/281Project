@@ -1,8 +1,44 @@
 
-<div ng-controller="homeUserController" style="padding-top:100px">
+<div ng-controller="homeUserController" style="padding-top:100px;">
 
-	this is home page....
-
+	<div class="col-md-12">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-3">
+			<select id="projectdropdown" class="form-control" data-role="listview" ng-options="list.text for list in projectlist track by list.text" ng-model="projectdropdown" >
+				<option value="">Select Project</option>
+	        </select>
+		</div>
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-3">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="openProject()">Open Project</button>
+			</span>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	
+	<div class="col-md-12" style="padding-top:100px">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-3">
+			<select id="tenantdropdown" class="form-control" data-role="listview" ng-options="list.text for list in tenantlist track by list.text" ng-model="tenantdropdown" >
+				<option value="">Select Tenant</option>
+	        </select>
+		</div>
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-3">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="createProject()">Create Project</button>
+			</span>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+	
 </div>
 
 <div style="padding-top: 50px;" ng-include src="'footer.html'"></div>

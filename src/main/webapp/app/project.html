@@ -1,0 +1,125 @@
+<div  ng-controller="projectController" style="padding-top:100px;">
+
+	<div class="col-md-12">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-2" style="font-weight: bold;">
+			Project Name :
+		</div>
+		<div class="col-md-2">
+			<input type="text" class="form-control" placeholder="Project Name" name="project_name"
+				size="50" ng-model="project_name" required>
+		</div>
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+
+	<div style="padding-top:80px; padding-bottom:100px;" ng-repeat="transaction in queue.transactions track by $index" 
+		ng-hide="tableCounterOne = $index;clickedEditable">
+		
+		<div class="col-md-12" style="padding-bottom:20px;"> 
+			<div class="col-md-1"> 
+			</div>
+			<div class="col-md-3" style="font-weight: bold; font-size: 20px"> 
+				{{transaction.tableName}}
+			</div>
+			<div class="col-md-2" style="padding-left:20px;"> 
+				<button class="btn btn-default btn-lg btn-block " type="button" ng-click="hideEdit[$index]=!hideEdit[$index];hideTextOnly[$index]=!hideTextOnly[$index];">Edit Table</button>
+			</div>
+			<div class="col-md-2" style="padding-left:20px;"> 
+				<button class="btn btn-default btn-lg btn-block " type="button" ng-click="addRow(tableCounterOne);">Add Row</button>
+			</div>
+			<div class="col-md-4"> 
+			</div>
+		</div>
+		<div class="col-md-12" ng-hide="hideEdit[$index]"> 
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<table st-safe-src="transaction" st-table="emptyArray" class="table table-striped" >
+					<thead>
+					<tr>
+						<th ng-repeat="col in transaction.col_name track by $index">
+							{{col}}
+						</th>
+					</tr>
+					</thead>
+					<tbody ng-hide="isLoading">
+					
+						<tr ng-repeat="each_row in transaction.row track by $index">
+							<td ng-repeat="each_col_val in each_row track by $index">
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" disabled/>
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" required/>
+							</td>
+							<td>
+								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
+									<span class="glyphicon glyphicon-remove" style="font-size: 20px;"></span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5" class="text-center">
+								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="col-md-1">
+			</div>		
+		</div>
+		<div class="col-md-12" ng-hide="hideTextOnly[$index]"> 
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-10">
+				<table st-safe-src="transaction" st-table="emptyArray" class="table table-striped" >
+					<thead>
+					<tr>
+						<th ng-repeat="col in transaction.col_name track by $index">
+							{{col}}
+						</th>
+					</tr>
+					</thead>
+					<tbody ng-hide="isLoading">
+					
+						<tr ng-repeat="each_row in transaction.row track by $index">
+							<td ng-repeat="each_col_val in each_row track by $index">
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" disabled/>
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" disabled/>
+							</td>
+							<td>
+								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
+									<span class="glyphicon glyphicon-remove" style="font-size: 20px;"></span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="5" class="text-center">
+								<div st-pagination="" st-items-by-page="itemsByPage" ></div>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="col-md-1">
+			</div>		
+		</div>
+		
+		<div class="col-md-12" style="paddding-top:50px; padding-bottom:50px;">
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+				<span class="input-group-btn ">
+					<button class="btn btn-default btn-lg btn-block " type="button" ng-click="updateDetails($index)">Submit</button>
+				</span>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+	
+</div>
