@@ -10,6 +10,8 @@ import com.project.controller.AppController;
 
 
 
+
+
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
