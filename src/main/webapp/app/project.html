@@ -16,13 +16,14 @@
 		</div>
 	</div>
 
-	<div style="padding-top:80px; padding-bottom:100px;" ng-repeat="transaction in queue.transactions track by $index" 
+	<div class="col-md-12" style="padding-top:80px; padding-bottom:50px;" ng-repeat="transaction in queue.transactions track by $index" 
 		ng-hide="tableCounterOne = $index;clickedEditable">
-		
-		<div class="col-md-12" style="padding-bottom:20px;"> 
+		<div class="col-md-1"></div>
+		<div class="col-md-10" style="padding: 20px 10px 10px 10px; border: 1px solid black;">
+			<div class="col-md-12" style="padding-bottom:20px; "> 
 			<div class="col-md-1"> 
 			</div>
-			<div class="col-md-3" style="font-weight: bold; font-size: 20px"> 
+			<div class="col-md-3" style="font-weight: bold; font-size: 20px; font-style: italic;"> 
 				{{transaction.tableName}}
 			</div>
 			<div class="col-md-2" style="padding-left:20px;"> 
@@ -55,7 +56,7 @@
 							</td>
 							<td>
 								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
-									<span class="glyphicon glyphicon-remove" style="font-size: 20px;"></span>
+									<span class="glyphicon glyphicon-remove" style="font-size: 20px; color: red; "></span>
 								</a>
 							</td>
 						</tr>
@@ -93,7 +94,7 @@
 							</td>
 							<td>
 								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
-									<span class="glyphicon glyphicon-remove" style="font-size: 20px;"></span>
+									<span class="glyphicon glyphicon-remove" style="font-size: 20px;  color: red;"></span>
 								</a>
 							</td>
 						</tr>
@@ -120,6 +121,8 @@
 			</div>
 			<div class="col-md-4"></div>
 		</div>
+		</div>
+		<div class="col-md-1"></div>
 	</div>
 	
 </div>
