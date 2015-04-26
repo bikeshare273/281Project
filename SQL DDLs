@@ -1,0 +1,50 @@
+CREATE TABLE tenants (
+
+tenantid			VARCHAR(20),
+tablename			VARCHAR(100),
+tabledesc			VARCHAR(200),
+
+PRIMARY KEY(tenantid, tablename));
+
+/*****************************************************************************/
+
+CREATE TABLE fields (
+tenantid			VARCHAR(20),
+tablename			VARCHAR(100),
+fieldname			VARCHAR(100),
+fieldtype			VARCHAR(100),
+
+PRIMARY KEY (tenantid, tablename, fieldname),
+FOREIGN KEY(tenantid) REFERENCES tenants(tenantid) ON DELETE CASCADE);
+
+/*****************************************************************************/
+
+CREATE TABLE users(
+userid				INT(10),
+name				VARCHAR(100),
+mobile				VARCHAR(20)			,#NOT NULL,
+address				VARCHAR(200)		,
+city				VARCHAR(20)			,#NOT NULL,
+zipcode				VARCHAR(20)			,#NOT NULL,
+state				VARCHAR(20)			,#NOT NULL,
+country				VARCHAR(20)			,#NOT NULL,
+
+PRIMARY KEY (userid));
+
+/*****************************************************************************/
+
+CREATE TABLE login(
+userid					INT(10),
+username				VARCHAR(100),
+password				VARCHAR(100),
+sessionid				INT(10),
+
+PRIMARY KEY (userid));
+
+/*****************************************************************************/
+
+CREATE TABLE test(
+TestIdString		VARCHAR(100),
+TestString			VARCHAR(100));
+
+/*****************************************************************************/

@@ -8,10 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.project.controller.AppController;
 
-
-
-
-
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
