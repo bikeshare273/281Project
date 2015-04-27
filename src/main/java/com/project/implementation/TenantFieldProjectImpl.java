@@ -63,7 +63,7 @@ public class TenantFieldProjectImpl {
 		String tableName;
 
 		for (Tenant tenantEntry : tenantEntries) {
-			tableName = tenantEntry.getTablename();
+			tableName = tenantEntry.getTenantid();
 			if (!tenants.contains(tableName)) {
 				tenants.add(tableName);
 			}
