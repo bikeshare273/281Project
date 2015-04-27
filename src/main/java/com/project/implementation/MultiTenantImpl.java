@@ -76,9 +76,13 @@ public ArrayList<DisplayData> getProject(String projectid){
 		d.setCol_name(fields);
 		
 		System.out.println("table name : "+tables.get(i));
+		System.out.println(td);
 	    System.out.println(td.get(tables.get(i)));
 	    
 	    BasicDBList bd=(BasicDBList) td.get(tables.get(i));
+	    if(bd == null){
+	    	 bd=(BasicDBList) td.get(tables.get(i).toLowerCase());
+	    }
 	    List<List<String>> entryList = new ArrayList<List<String>> ();
 	 
 	    // iterating over number of entries in table

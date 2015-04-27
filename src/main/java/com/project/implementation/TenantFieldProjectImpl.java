@@ -24,6 +24,7 @@ public class TenantFieldProjectImpl {
 	ProjectDao projectDao;
 
 	public List<String> getAllTablesForATenant(String tenantid) {
+		System.out.println("tenantid "+tenantid);
 		List<Tenant> tenantEntries = tenantDao.getAllTablesForTenant(tenantid);
 
 		if (tenantEntries == null) {

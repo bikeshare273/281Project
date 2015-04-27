@@ -3,16 +3,15 @@ package com.project.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
-import com.mongodb.util.JSON;
 import com.project.dao.ProjectDao;
 import com.project.databuffers.ProjectData;
 import com.project.entities.Project;
@@ -110,6 +109,13 @@ public class MultiTenantAPIImpl {
 		basicDBObject.put("Tenant_Id", Tenant_Id);
 		
 		BasicDBObject dbObject = new BasicDBObject();
+		List<String> tablesForTenant = tenantFieldProjectImpl.getAllTablesForATenant(Tenant_Id);
+		for(String table_name : tablesForTenant){
+			System.out.println("Table Name -"+table_name+" for tenant-"+Tenant_Id);
+			dbObject.append(table_name, new BasicDBList());
+		}
+		
+		
 		BasicDBList basicDBList1 = new BasicDBList();
 		BasicDBList basicDBList2 = new BasicDBList();
 		

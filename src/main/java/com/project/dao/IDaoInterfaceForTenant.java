@@ -2,6 +2,8 @@ package com.project.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.project.entities.Tenant;
 
 public interface IDaoInterfaceForTenant {
