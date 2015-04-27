@@ -89,11 +89,31 @@ app.controller('homeController', function($scope, $http, $location, $q,
 	$rootScope.hideStaticTabs = false;
 
 	$scope.loginform_login = function(item, event) {
-		console.log("--> Submitting form " + $scope.loginform_email + " "
+		console.log("--> Submitting form "
+				+ $scope.loginform_email + " "
 				+ $scope.loginform_password);
 		console.log("--> Submitting form ");
-		
-		$location.url('/home');
+		var data = {
+			username : $scope.loginform_email,
+			password : $scope.loginform_password
+		};
+
+		var response = $http.post("../../api/v1/login", data,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					$location.url('/home');
+				});
+		response.error(function(data, status, headers, config) {
+			if (response.status === 401
+					|| response.status === 400) {
+				$scope.loginform_error = "Invalid request";
+				$location.url('/');
+				return $q.reject(response);
+			}
+		});
+	
 	};
 
 	$scope.clickRegister = function() {
@@ -111,16 +131,32 @@ app.controller('registerController',
 	
 	$scope.signupform_signup = function(item, event) {
 		console.log("--> Submitting form "
-				+ $scope.signupform_name + " "
-				+ $scope.signupform_email );
+				+ $scope.signupform_email + " "
+				+ $scope.signupform_password );
 		console.log("--> Submitting form "
-				+ $scope.signupform_phone + " "
-				+ $scope.signupform_address);
-		console.log("--> Submitting form "
-				+ $scope.signupform_city + " "
-				+ $scope.signupform_state+" "
-				+ $scope.signupform_country);
+				+ $scope.signupform_phone );
 		console.log("--> Submitting form ");
+		var data = {
+				name : $scope.signupform_email,
+				username : $scope.signupform_email,
+				password: $scope.signupform_password,
+			};
+			var response = $http.post("../../api/v1/createuser", data,
+					{});
+			response
+					.success(function(dataFromServer, status,
+							headers, config) {
+						$scope.signupform_success = "User created successfully";
+					});
+			response.error(function(data, status, headers, config) {
+				if (response.status === 401
+						|| response.status === 400) {
+					$scope.error = "Invalid request";
+					$location.url('/');
+					return $q.reject(response);
+				}
+			});
+		
 		
 	};
 	console.log('registerController end');

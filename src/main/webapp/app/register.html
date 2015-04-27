@@ -51,40 +51,6 @@
 					</div>
 				</div>
 				
-				<div style="padding-bottom: 10px; padding-top: 10px;">
-					<input type="text" class="form-control" placeholder="Phone" name="signupform_phone" 
-						size="50" ng-model="signupform_phone" ng-minlength="10" ng-maxlength="10" required>
-					
-					<div class="error-container"
-						ng-show="signupform.signupform_phone.$dirty && signupform.signupform_phone.$invalid">
-							<small class="errorbox"
-							ng-show="signupform.signupform_phone.$error.required">Phone number is required</small> 
-							<small class="errorbox"
-							ng-show="signupform.signupform_phone.$error.minlength">Phone number is invalid</small>
-							<small class="errorbox"
-							ng-show="signupform.signupform_phone.$error.maxlength">Phone number is invalid</small>
-					</div>
-				</div>
-				
-				<div style="padding-bottom: 10px; padding-top: 10px;">
-					<select
-						id="signupform_country" class="form-control" data-role="listview"
-						ng-model="signupform_country" required>
-						<option value="">Select Country</option>
-						<option value="1">India</option>
-						<option value="2">United States</option>
-						<option value="3">China</option>
-						<option value="4">Japan</option>
-						<option value="5">South Africa</option>
-					</select>
-					
-					<div class="error-container"
-						ng-show="signupform.signupform_country.$dirty && signupform.signupform_country.$invalid">
-							<small class="errorbox"
-							ng-show="signupform.signupform_country.$error.required">Country is required</small> 
-					</div>
-				</div>
-				
 				<div class="input-group" style="padding-bottom: 5px; padding-top: 5px; text-align:center;">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="button" ng-click="signupform_signup()">Register</button>
