@@ -23,6 +23,17 @@ public class Project {
 	@Column(name = "projectid", unique = false, nullable = false)
 	private String projectid;
 	
+	@Column(name = "projectname", unique = false, nullable = false)
+	private String projectname;
+	
+	public String getProjectname() {
+		return projectname;
+	}
+
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
+	}
+
 	@Column(name = "tenantid", unique = false, nullable = false)
 	private String tenantid;
 

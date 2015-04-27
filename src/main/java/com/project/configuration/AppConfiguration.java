@@ -25,6 +25,7 @@ import com.project.dao.TestDao;
 import com.project.dao.UserDao;
 import com.project.implementation.AuthImplementation;
 import com.project.implementation.IAuthInterfaceForLogin;
+import com.project.implementation.MultiTenantAPIImpl;
 import com.project.implementation.MultiTenantImpl;
 import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
@@ -58,6 +59,11 @@ public class AppConfiguration {
 		return new MultiTenantImpl();
 	}
 	
+	
+	@Bean
+	public MultiTenantAPIImpl getMultiTenantAPIImpl(){
+		return new MultiTenantAPIImpl();
+	}
 	
 	
 	/********************************************************************************************************************/

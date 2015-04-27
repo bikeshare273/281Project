@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -27,12 +28,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.project.configuration.AppConfiguration;
 import com.project.dao.IDaoInterfaceForLogin;
 import com.project.dao.ITestDao;
+import com.project.databuffers.NewProjectDTO;
+import com.project.databuffers.ProjectData;
 import com.project.dto.DisplayData;
 import com.project.dto.LoginDTO;
 import com.project.dto.SearchDTO;
 import com.project.dto.UserDTO;
 import com.project.entities.Test;
 import com.project.implementation.IAuthInterfaceForLogin;
+import com.project.implementation.MultiTenantAPIImpl;
 import com.project.implementation.MultiTenantImpl;
 import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
@@ -66,6 +70,9 @@ public class AppController extends WebMvcConfigurerAdapter{
 
 	@Autowired
 	ITestDao testDao;
+	
+	@Autowired
+	MultiTenantAPIImpl apiImpl;
 	
 /***********************************************************************************************/
 
@@ -153,13 +160,51 @@ public void deleteUser(@RequestBody SearchDTO searchDTO) {
 
 /***********************************************************************************/
 
-
-@ResponseStatus(HttpStatus.OK)
-@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET)
+@ResponseStatus(HttpStatus.CREATED)
+@RequestMapping(value = "/createproject", method = RequestMethod.POST)
 @ResponseBody
-public List<String> getAllTenants() {
+//public boolean createProject(@PathVariable String Tenant_Id) {
+public String createProject(@RequestBody NewProjectDTO newProjectDTO, @CookieValue ("userid") int userid) {	
+	
+	String tenantid = newProjectDTO.getTenantid();
+	String projectname = newProjectDTO.getProjectname();
+	
+	return apiImpl.createProject(tenantid, userid, projectname);	
+}
 
-	return tenantAndFieldImpl.getDistinctTenants();
+
+@ResponseStatus(HttpStatus.CREATED)
+@RequestMapping(value = "/updateproject", method = RequestMethod.POST)
+@ResponseBody
+public boolean Project(@RequestBody ProjectData projectData) {	
+	
+/*	ProjectData projectData = new ProjectData();
+	ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String,String>>();	
+	HashMap<String, String> hashMap = new HashMap<String, String>();
+	HashMap<String, String> hashMap1 = new HashMap<String, String>();
+	
+	projectData.setProjectId("P84557795");
+	projectData.setProjectName("Project 1");
+	projectData.setTenantId("G");
+	projectData.setTableName("Resources");
+	
+	//data 1
+	hashMap.put("task_id", "T6");
+	hashMap.put("start_date", "01/10/2015");
+	hashMap.put("end_date", "01/11/2015");
+	hashMap.put("worker", "Gaurav");
+	arrayList.add(hashMap);
+	
+	//data 2 
+	hashMap1.put("task_id", "T5");
+	hashMap1.put("start_date", "01/10/2016");
+	hashMap1.put("end_date", "01/11/2016");
+	hashMap1.put("worker", "Vaibhav");
+	arrayList.add(hashMap1);
+
+	projectData.setRows(arrayList);*/
+	
+	return apiImpl.updateProject(projectData);	
 }
 
 
@@ -175,7 +220,15 @@ public ArrayList<DisplayData> getProject(@RequestBody SearchDTO searchDTO) {
 }
 
 
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getAllTenants", method = RequestMethod.GET)
+@ResponseBody
+public List<String> getAllTenants() {
 
+	return tenantAndFieldImpl.getDistinctTenants();
+}
+
+/***********************************************************************************/
 
 
 
