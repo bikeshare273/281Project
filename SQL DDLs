@@ -1,3 +1,4 @@
+
 CREATE TABLE tenants (
 
 tenantid			VARCHAR(20),
@@ -46,5 +47,40 @@ PRIMARY KEY (userid));
 CREATE TABLE test(
 TestIdString		VARCHAR(100),
 TestString			VARCHAR(100));
+
+/*****************************************************************************/
+
+INSERT INTO tenants VALUES("GANTTER", "TASK", "TASKTABLE");
+INSERT INTO tenants VALUES("GANTTER", "RESOURCE", "RESOURCETABLE");
+
+INSERT INTO tenants VALUES("KANBAN", "TASK", "TASKTABLE");
+INSERT INTO tenants VALUES("KANBAN", "USER", "USERTABLE");
+
+/*****************************************************************************/
+
+INSERT INTO fields VALUES("GANTTER", "TASK", "Task_Id", "");
+INSERT INTO fields VALUES("GANTTER", "TASK", "Name", "");
+INSERT INTO fields VALUES("GANTTER", "TASK", "Duration", "");
+INSERT INTO fields VALUES("GANTTER", "TASK", "Start", "");
+INSERT INTO fields VALUES("GANTTER", "TASK", "Finish", "");
+INSERT INTO fields VALUES("GANTTER", "TASK", "Resource", "");
+
+INSERT INTO fields VALUES("GANTTER", "RESOURCE", "Resource_Id", "");
+INSERT INTO fields VALUES("GANTTER", "RESOURCE", "Name", "");
+INSERT INTO fields VALUES("GANTTER", "RESOURCE", "Email_Id", "");
+INSERT INTO fields VALUES("GANTTER", "RESOURCE", "Type", "");
+INSERT INTO fields VALUES("GANTTER", "RESOURCE", "Cost", "");
+
+/*****************************************************************************/
+
+INSERT INTO fields VALUES("KANBAN", "TASK", "Task_Id", "");
+INSERT INTO fields VALUES("KANBAN", "TASK", "Task_Name", "");
+INSERT INTO fields VALUES("KANBAN", "TASK", "Task_Description", "");
+INSERT INTO fields VALUES("KANBAN", "TASK", "Task_Status", "");
+INSERT INTO fields VALUES("KANBAN", "TASK", "Finish_Date", "");
+INSERT INTO fields VALUES("KANBAN", "TASK", "Assignee", "");
+
+INSERT INTO fields VALUES("KANBAN", "USER", "Email_Id", "");
+INSERT INTO fields VALUES("KANBAN", "USER", "Permission", "");
 
 /*****************************************************************************/

@@ -12,14 +12,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 
+import com.project.dao.FieldDao;
+import com.project.dao.IDaoInterfaceForFields;
 import com.project.dao.IDaoInterfaceForLogin;
+import com.project.dao.IDaoInterfaceForTenant;
 import com.project.dao.IDaoInterfaceForUser;
 import com.project.dao.ITestDao;
 import com.project.dao.LoginDao;
+import com.project.dao.ProjectDao;
+import com.project.dao.TenantDao;
 import com.project.dao.TestDao;
 import com.project.dao.UserDao;
 import com.project.implementation.AuthImplementation;
 import com.project.implementation.IAuthInterfaceForLogin;
+import com.project.implementation.MultiTenantImpl;
+import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
 import com.project.interceptor.SessionValidatorInterceptor;
 import com.project.util.AppUtils;
@@ -41,6 +48,18 @@ public class AppConfiguration {
 		return new UserImpl();
 	}
 
+	@Bean
+	public TenantFieldProjectImpl getTenantAndFieldImpl(){
+		return new TenantFieldProjectImpl();
+	}
+	
+	@Bean
+	public MultiTenantImpl getMultiTenantImpl(){
+		return new MultiTenantImpl();
+	}
+	
+	
+	
 	/********************************************************************************************************************/
 
 	/* DAO Beans */
@@ -58,9 +77,25 @@ public class AppConfiguration {
 	}
 
 	@Bean
+	public IDaoInterfaceForTenant getTenantDao(){
+		return new TenantDao();
+	}
+	
+	@Bean
+	public IDaoInterfaceForFields getFieldDao(){
+		return new FieldDao();
+	}
+	
+	@Bean
 	public ITestDao getTestDao() {
 		return new TestDao();
 	}
+	
+	@Bean
+	public ProjectDao getProjectDao(){
+		return new ProjectDao();
+	}
+	
 
 	/********************************************************************************************************************/
 

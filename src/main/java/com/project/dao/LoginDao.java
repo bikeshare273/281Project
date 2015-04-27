@@ -114,4 +114,33 @@ public class LoginDao implements IDaoInterfaceForLogin {
 
 	}
 
+	
+	@Override
+	public String getUserNameByUserId(Integer userid) {
+
+		String query = "from Login l where l.userid = ? ";
+		
+		@SuppressWarnings("unchecked")
+		List<Login> logins = (List<Login>) hibernateTemplate.find(query, userid);
+
+		if (logins.isEmpty()) {
+			return null;
+		} else {
+		
+			String username = logins.get(0).getUsername();
+			
+			return username;
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
