@@ -169,23 +169,37 @@ app.controller('homeUserController',
 	$rootScope.hideStaticTabs = true;
 	
 	//get project list
-	var dataFromServer = [
-	         			 {"text":"table_name1"},
-	        			 {"text":"table_name2"},
-	        			 {"text":"table_name3"},
-	        			]
-	$scope.projectlist = dataFromServer;
+	var data = {
+			
+	};
+	var response = $http.get("../../api/v1/getprojectsbyuserid");
+	response
+			.success(function(dataFromServer, status,
+					headers, config) {
+				$scope.projectlist = dataFromServer;
+			});
+	response.error(function(data, status, headers, config) {
+		if (response.status === 401
+				|| response.status === 400) {
+			$scope.error = "Invalid request";
+			$location.url('/');
+			return $q.reject(response);
+		}
+	});
 	
 	$scope.openProject = function(item, event) {
 		console.log("--> Submitting form openProject "
 				+ $scope.projectdropdown.text );
-		
+		console.log("projectdropdown "+$scope.projectdropdown);
+		var data = new Array();
+		data["projectid"] = $scope.projectdropdown;
+		dataSharing.set(data);
 		$location.url('/openproject');
 		
 	};
 	
 	//get tenant list
-	var data = {
+	data = {
 			
 		};
 		var response = $http.get("../../api/v1/getAllTenants");
@@ -212,11 +226,30 @@ app.controller('homeUserController',
 	
 	$scope.createProject = function(item, event) {
 		console.log("--> Submitting form createProject "
-				+ $scope.tenantdropdown.text );
+				+ $scope.tenantdropdown);
 		
-		//fetch deatils related to project and pass to projectController
+		//create project
+		var data = {
+				tenantid : $scope.tenantdropdown,
+			};
+		console.log("create project "+$scope.tenantdropdown);
+			var response = $http.post("../../api/v1/createproject", data,
+					{});
+			response
+					.success(function(dataFromServer, status,
+							headers, config) {
+						console.log(dataFromServer.projectId);
+					});
+			response.error(function(data, status, headers, config) {
+				if (response.status === 401
+						|| response.status === 400) {
+					$scope.error = "Invalid request";
+					$location.url('/');
+					return $q.reject(response);
+				}
+			});
 		
-		$location.url('/opennewproject');
+		//$location.url('/opennewproject');
 	};
 	
 	console.log('homeUserController end');
@@ -230,8 +263,12 @@ app.controller('projectController',
 	
 	$scope.tableCounterOne = 0;
 	
+	//get project id
+	var projectid = dataSharing.get().projectid;
+	console.log("projectid received "+projectid);
+	
 	//details about project
-	var displayData = new Array();
+	/*var displayData = new Array();
 	displayData[0] = {
 			"tableName":"Tasks",
 			"col_name":["task_id","task_name","task_priority"],
@@ -241,7 +278,28 @@ app.controller('projectController',
 			"tableName":"Resources",
 			"col_name":["resource_id","resource_name"],
 			"row":[["1","swap"],["2","vaibhav"]]
-	};
+	};*/
+	//fetch details about project
+	var displayData = new Array();
+	var data = {
+			searchString : projectid,
+		};
+		var response = $http.post("../../api/v1/getproject", data,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					console.log(dataFromServer);
+					displayData = dataFromServer;
+				});
+		response.error(function(data, status, headers, config) {
+			if (response.status === 401
+					|| response.status === 400) {
+				$scope.error = "Invalid request";
+				$location.url('/');
+				return $q.reject(response);
+			}
+		});
 	
 	//initialize hide/unhide logic
 	$scope.hideEdit = new Array();

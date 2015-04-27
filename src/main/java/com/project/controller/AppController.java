@@ -164,12 +164,15 @@ public void deleteUser(@RequestBody SearchDTO searchDTO) {
 @RequestMapping(value = "/createproject", method = RequestMethod.POST)
 @ResponseBody
 //public boolean createProject(@PathVariable String Tenant_Id) {
-public String createProject(@RequestBody NewProjectDTO newProjectDTO, @CookieValue ("userid") int userid) {	
+public ProjectData createProject(@RequestBody NewProjectDTO newProjectDTO, @CookieValue ("userid") int userid) {	
 	
 	String tenantid = newProjectDTO.getTenantid();
 	String projectname = newProjectDTO.getProjectname();
-	
-	return apiImpl.createProject(tenantid, userid, projectname);	
+	String projectId = apiImpl.createProject(tenantid, userid, projectname);
+	System.out.println("createProject "+projectId);
+	ProjectData projectData = new ProjectData();
+	projectData.setProjectId(projectId);
+	return projectData;	
 }
 
 
@@ -209,7 +212,7 @@ public boolean Project(@RequestBody ProjectData projectData) {
 
 
 @ResponseStatus(HttpStatus.OK)
-@RequestMapping(value = "/getproject", method = RequestMethod.GET)
+@RequestMapping(value = "/getproject", method = RequestMethod.POST)
 @ResponseBody
 public ArrayList<DisplayData> getProject(@RequestBody SearchDTO searchDTO) {
 
