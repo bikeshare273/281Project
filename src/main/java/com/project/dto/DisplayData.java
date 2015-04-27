@@ -5,6 +5,7 @@ import java.util.List;
 
 public class DisplayData {
 	
+	String projectName;
 	String tableName;
 	List<String> col_name;
 	List<List<String>> row;
@@ -26,6 +27,12 @@ public class DisplayData {
 	}
 	public void setRow(List<List<String>> row) {
 		this.row = row;
+	}
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }
 
