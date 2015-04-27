@@ -47,8 +47,7 @@ public class UserImpl {
 		
 		Integer userid = appUtils.generateIdValue(1000);
 		userObject.setUserid(userid);
-		//userObject.setEmail(user.getUsername());
-
+		
 		loginObject.setUserid(userid);
 		loginObject.setUsername(user.getUsername());
 		loginObject.setPassword(appUtils.passwordEncrypter(user.getPassword()));

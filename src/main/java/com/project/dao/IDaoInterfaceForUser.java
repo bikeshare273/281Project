@@ -6,8 +6,8 @@ import com.project.entities.User;
 
 public interface IDaoInterfaceForUser {
 
-	public User save(User user);
-	public User update(User user);
+	public void save(User user);
+	public void update(User user);
 	public void delete(User user);
 	public User getUserById(Integer userid);
 	public User getUserByName(String name);

@@ -17,19 +17,15 @@ public class UserDao implements IDaoInterfaceForUser {
 	HibernateTemplate hibernateTemplate;
 
 	@Override
-	public User save(User user) {
+	public void save(User user) {
 
 		hibernateTemplate.save(user);
-		
-		return null;
 	}
 
 	@Override
-	public User update(User user) {
+	public void update(User user) {
 
 		hibernateTemplate.update(user);
-		
-		return null;
 	}
 
 	@Override

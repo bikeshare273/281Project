@@ -29,6 +29,8 @@ import com.project.dao.IDaoInterfaceForLogin;
 import com.project.dao.ITestDao;
 import com.project.dto.DisplayData;
 import com.project.dto.LoginDTO;
+import com.project.dto.SearchDTO;
+import com.project.dto.UserDTO;
 import com.project.entities.Test;
 import com.project.implementation.IAuthInterfaceForLogin;
 import com.project.implementation.MultiTenantImpl;
@@ -114,10 +116,44 @@ return userImpl.checkUniqueUsername(username);
 	
 /***********************************************************************************/
 
-								/* REST APIs */
+								/* User Management APIs */
 
 /***********************************************************************************/
 	
+
+@ResponseStatus(HttpStatus.CREATED)
+@RequestMapping(value = "/createuser", method = RequestMethod.POST)
+@ResponseBody
+public UserDTO createUser(@Valid @RequestBody UserDTO user) {
+	return userImpl.createUser(user);
+}
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/fetchuser", method = RequestMethod.GET)
+@ResponseBody
+public UserDTO fetchUser(@CookieValue("userid") int userid) {
+
+	return userImpl.getUser(userid);		
+
+}
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/deleteuser", method = RequestMethod.POST)
+@ResponseBody
+public void deleteUser(@RequestBody SearchDTO searchDTO) {
+
+	Integer userid = Integer.parseInt(searchDTO.getSearchString());
+	
+	userImpl.deleteUser(userid);
+}
+
+/***********************************************************************************/
+
+							/* REST APIs */
+
+/***********************************************************************************/
+
+
 @ResponseStatus(HttpStatus.OK)
 @RequestMapping(value = "/getAllTenants", method = RequestMethod.GET)
 @ResponseBody
@@ -130,10 +166,11 @@ public List<String> getAllTenants() {
 @ResponseStatus(HttpStatus.OK)
 @RequestMapping(value = "/getproject", method = RequestMethod.GET)
 @ResponseBody
-public ArrayList<DisplayData> getProject() {
+public ArrayList<DisplayData> getProject(@RequestBody SearchDTO searchDTO) {
 
-	return multiTenantImpl.getProject("P1");
+	String projectid = searchDTO.getSearchString(); 
 
+	return multiTenantImpl.getProject(projectid);
 
 }
 
@@ -149,54 +186,6 @@ public ArrayList<DisplayData> getProject() {
 
 
 
-/*
-@ResponseStatus(HttpStatus.CREATED)
-@RequestMapping(value = "/createproject", method = RequestMethod.POST)
-@ResponseBody
-public String createProject(@RequestBody ProjectData projectData, @CookieValue("userid") int userid ) {	
-	String tenantid = "GANTTER";
-	String username = loginDao.getUserNameByUserId(userid);
-	
-	return apiImpl.createProject(tenantid, username);	
-}
-
-
-@ResponseStatus(HttpStatus.CREATED)
-@RequestMapping(value = "/saveproject", method = RequestMethod.POST)
-@ResponseBody
-//public boolean saveProject(@PathVariable ProjectData projectData) {
-public boolean Project(@RequestBody ProjectData projectData, @CookieValue("userid") int userid) {	
-	
-	String username = loginDao.getUserNameByUserId(userid);
-	
-	ProjectData projectData = new ProjectData();
-	ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String,String>>();	
-	HashMap<String, String> hashMap = new HashMap<String, String>();
-	
-	projectData.setProjectId("P1");
-	projectData.setProjectName("Project 1");
-	projectData.setTenantId("G");
-	projectData.setTableName("Task");
-	
-	//data 1
-	hashMap.put("task_id", "T1");
-	hashMap.put("start_date", "01/10/2015");
-	hashMap.put("end_date", "01/11/2015");
-	hashMap.put("worker", "Gaurav");
-	arrayList.add(hashMap);
-	
-	//data 2 
-	hashMap.put("task_id", "T2");
-	hashMap.put("start_date", "01/10/2016");
-	hashMap.put("end_date", "01/11/2016");
-	hashMap.put("worker", "Vaibhav");
-	arrayList.add(hashMap);
-
-	
-	return apiImpl.saveProject(projectData);	
-}
-
-*/
 
 
 
@@ -210,22 +199,6 @@ public boolean Project(@RequestBody ProjectData projectData, @CookieValue("useri
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 /***********************************************************************************/
 		
 								/* Test APIs */
