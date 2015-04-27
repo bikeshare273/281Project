@@ -185,12 +185,30 @@ app.controller('homeUserController',
 	};
 	
 	//get tenant list
-	dataFromServer = [
+	var data = {
+			
+		};
+		var response = $http.get("../../api/v1/getAllTenants");
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					$scope.tenantlist = dataFromServer;
+				});
+		response.error(function(data, status, headers, config) {
+			if (response.status === 401
+					|| response.status === 400) {
+				$scope.error = "Invalid request";
+				$location.url('/');
+				return $q.reject(response);
+			}
+		});
+	
+	/*dataFromServer = [
          			 	 {"text":"tenant_name1"},
 	        			 {"text":"tenant_name2"},
 	        			 {"text":"tenant_name3"},
 	        			]
-	$scope.tenantlist = dataFromServer;
+	$scope.tenantlist = dataFromServer;*/
 	
 	$scope.createProject = function(item, event) {
 		console.log("--> Submitting form createProject "
