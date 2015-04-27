@@ -24,8 +24,9 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-3">
-			<select id="tenantdropdown" class="form-control" data-role="listview" ng-options="list.text for list in tenantlist track by list.text" ng-model="tenantdropdown" >
+			<select id="tenantdropdown" class="form-control" data-role="listview" ng-model="tenantdropdown" >
 				<option value="">Select Tenant</option>
+					<option ng-repeat="tenant in tenantlist track by $index" value="{{tenantlist[$index]}}">{{tenantlist[$index]}}</option>
 	        </select>
 		</div>
 		<div class="col-md-2">
