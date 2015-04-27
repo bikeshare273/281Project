@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.project.dao.IDaoInterfaceForFields;
 import com.project.dao.IDaoInterfaceForTenant;
 import com.project.dao.ProjectDao;
+import com.project.dto.ProjectIdAndNameDTO;
 import com.project.entities.Project;
 import com.project.entities.Tenant;
 
@@ -121,6 +122,30 @@ public class TenantFieldProjectImpl {
 	
 	}
 	
+	
+	public List<ProjectIdAndNameDTO> getProjectsByuserId(Integer userid)
+	{
+		List<Project> projects = projectDao.getListOfProjectsByUserId(userid);
+		
+		if(projects == null) { return null; }
+		
+		List<ProjectIdAndNameDTO> ListOfPorjects = new ArrayList<ProjectIdAndNameDTO>();
+		
+		ProjectIdAndNameDTO projectObject = new ProjectIdAndNameDTO();
+		
+		for(Project project : projects)
+		{
+			
+			projectObject.setProjectid(project.getProjectid());
+			projectObject.setProjectname(project.getProjectname());
+			
+			ListOfPorjects.add(projectObject);
+			
+		}
+		
+		return ListOfPorjects;
+	
+	}
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.project.controller;
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +34,7 @@ import com.project.databuffers.NewProjectDTO;
 import com.project.databuffers.ProjectData;
 import com.project.dto.DisplayData;
 import com.project.dto.LoginDTO;
+import com.project.dto.ProjectIdAndNameDTO;
 import com.project.dto.SearchDTO;
 import com.project.dto.UserDTO;
 import com.project.entities.Test;
@@ -231,7 +234,7 @@ public List<String> getAllTenants() {
 	return tenantAndFieldImpl.getDistinctTenants();
 }
 
-
+/*
 @ResponseStatus(HttpStatus.OK)
 @RequestMapping(value = "/getprojectsbyuserid", method = RequestMethod.GET)
 @ResponseBody
@@ -239,6 +242,18 @@ public List<String> getAllProjectIdsByuserId(@CookieValue ("userid") int userid 
 
 	return tenantAndFieldImpl.getProjectIdsByuserId(userid);
 }
+*/
+
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getprojectsbyuserid", method = RequestMethod.GET)
+@ResponseBody
+public List<ProjectIdAndNameDTO> getAllProjectIdsByuserId(@CookieValue ("userid") int userid ) {
+
+	return tenantAndFieldImpl.getProjectsByuserId(userid);
+}
+
+
 
 /***********************************************************************************/
 
