@@ -239,6 +239,10 @@ app.controller('homeUserController',
 					.success(function(dataFromServer, status,
 							headers, config) {
 						console.log(dataFromServer.projectId);
+						var data = new Array();
+						data["projectid"] = dataFromServer.projectId;
+						dataSharing.set(data);
+						$location.url('/openproject');
 					});
 			response.error(function(data, status, headers, config) {
 				if (response.status === 401
@@ -321,8 +325,10 @@ app.controller('projectController',
 						console.log("tableid "+displayData[tableid].col_name);
 						var rows_data = new Array();
 						for(var i=0; i<displayData[tableid].row.length; i++){
+							var map = new Object();
 							var createKeyValueString = "{";
 							for(var j=0; j<displayData[tableid].col_name.length; j++){
+								map[displayData[tableid].col_name[j]] = displayData[tableid].row[i][j];
 								//rows_data[i][displayData[tableid].col_name[j]] = displayData[tableid].row[i][j];
 								createKeyValueString = createKeyValueString + "'" + displayData[tableid].col_name[j] +"':'" + displayData[tableid].row[i][j] +"'";
 								if(j<displayData[tableid].col_name.length-1){
@@ -330,16 +336,42 @@ app.controller('projectController',
 								}
 							}
 							createKeyValueString = createKeyValueString + "}"
-							rows_data[i] = createKeyValueString;
+							//rows_data[i] = createKeyValueString;
+							rows_data[i] = map;
 						}
 						console.log("rows_data "+rows_data);
 						var updateData = {
 								"tableName":displayData[tableid].tableName,
-								"projectName":"",
-								"tenant_id":"",
+								"projectName":$scope.project_name,
+								"tenantId":"",
+								"projectId":projectid,
 								"rows":rows_data
 						}
 						console.log("updateData "+updateData.tableName);
+						
+						//submit updated data
+						console.log("update project "+$scope.tenantdropdown);
+							var response = $http.post("../../api/v1/updateproject", updateData,
+									{});
+							response
+									.success(function(dataFromServer, status,
+											headers, config) {
+										console.log(dataFromServer);
+										$route.reload();
+										/*var data = new Array();
+										data["projectid"] = projectid;
+										dataSharing.set(data);
+										$location.url('/openproject');*/
+									});
+							response.error(function(data, status, headers, config) {
+								if (response.status === 401
+										|| response.status === 400) {
+									$scope.error = "Invalid request";
+									$location.url('/');
+									return $q.reject(response);
+								}
+							});
+						
 					};
 					 
 					 $scope.deleteRow = function(tableid, rowid) {

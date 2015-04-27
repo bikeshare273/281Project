@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-md-2">
 			<input type="text" class="form-control" placeholder="Project Name" name="project_name"
-				size="50" ng-model="project_name" required>
+				size="50" ng-model="project_name" value="{{project_name}}" required>
 		</div>
 		<div class="col-md-3">
 		</div>
@@ -51,8 +51,9 @@
 					
 						<tr ng-repeat="each_row in transaction.row track by $index">
 							<td ng-repeat="each_col_val in each_row track by $index">
-								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" disabled/>
-								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" required/>
+								<!-- <input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" />
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" required/> -->
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" required />
 							</td>
 							<td>
 								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
@@ -89,8 +90,9 @@
 					
 						<tr ng-repeat="each_row in transaction.row track by $index">
 							<td ng-repeat="each_col_val in each_row track by $index">
-								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" disabled/>
-								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" disabled/>
+								<!-- <input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" ng-hide="$index > 0" disabled/>
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]"  ng-hide="$index < 1" disabled/> -->
+								<input type="text" class="form-control" value="{{each_col_val}}" name="{{each_col_val}}" ng-model="each_row[$index]" disabled/>
 							</td>
 							<td>
 								<a href="" ng-click="deleteRow(tableCounterOne, $index)" style="padding-left:10px;">
