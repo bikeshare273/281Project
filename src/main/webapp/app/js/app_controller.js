@@ -280,7 +280,6 @@ app.controller('projectController',
 			"row":[["1","swap"],["2","vaibhav"]]
 	};*/
 	//fetch details about project
-	var displayData = new Array();
 	var data = {
 			searchString : projectid,
 		};
@@ -290,7 +289,90 @@ app.controller('projectController',
 				.success(function(dataFromServer, status,
 						headers, config) {
 					console.log(dataFromServer);
-					displayData = dataFromServer;
+					var displayData = dataFromServer;
+					
+					//initialize hide/unhide logic
+					$scope.hideEdit = new Array();
+					$scope.hideTextOnly = new Array();
+					
+					
+					
+					console.log("l "+displayData.length);
+					for(var n=0; n<displayData.length; n++){
+						$scope.hideEdit[n] = true;
+						$scope.hideTextOnly[n] = false;
+					}
+					
+					//push data into table
+					 $scope.queue = {
+				        transactions: []
+				    };
+					 for(var i=0; i<displayData.length; i++){
+				    	console.log("displayData "+displayData[i]);
+				    	 $scope.queue.transactions.push(displayData[i]);
+				    }
+					
+					 
+					//on click submit
+					 $scope.updateDetails = function(tableid) {
+						console.log("--> Submitting form updateDetails ");
+						
+						//fetch deatils related to project and pass to projectController
+						console.log("tableid "+displayData[tableid].col_name);
+						var rows_data = new Array();
+						for(var i=0; i<displayData[tableid].row.length; i++){
+							var createKeyValueString = "{";
+							for(var j=0; j<displayData[tableid].col_name.length; j++){
+								//rows_data[i][displayData[tableid].col_name[j]] = displayData[tableid].row[i][j];
+								createKeyValueString = createKeyValueString + "'" + displayData[tableid].col_name[j] +"':'" + displayData[tableid].row[i][j] +"'";
+								if(j<displayData[tableid].col_name.length-1){
+									createKeyValueString = createKeyValueString + ",";
+								}
+							}
+							createKeyValueString = createKeyValueString + "}"
+							rows_data[i] = createKeyValueString;
+						}
+						console.log("rows_data "+rows_data);
+						var updateData = {
+								"tableName":displayData[tableid].tableName,
+								"projectName":"",
+								"tenant_id":"",
+								"rows":rows_data
+						}
+						console.log("updateData "+updateData.tableName);
+					};
+					 
+					 $scope.deleteRow = function(tableid, rowid) {
+							console.log("deleting row for table "+tableid+" "+rowid);
+							$scope.hideEdit[tableid] = true;
+							$scope.hideTextOnly[tableid] = false;
+							console.log("deleting row for table length "+displayData[tableid].row.length);
+							displayData[tableid].row.splice(rowid, 1);
+							console.log("deleting row for table length after "+displayData[tableid].row.length);
+							//$route.reload();
+							$location.url('/openproject');
+							console.log("deleting row for table "+displayData[tableid].row);
+					};
+
+					$scope.addRow = function(tableid) {
+							console.log("adding row for table "+tableid);
+							$scope.hideEdit[tableid] = true;
+							$scope.hideTextOnly[tableid] = false;
+							var rowdata = new Array();
+							for(var i=0; i<displayData[tableid].col_name.length; i++){
+								rowdata[i] = " ";
+							}
+
+							if(displayData[tableid].row == null){
+								displayData[tableid].row = new Array();
+							}
+							displayData[tableid].row.splice(displayData[tableid].row.length, 0, rowdata);
+							console.log("adding row for table length after "+displayData[tableid].row.length);
+							//$route.reload();
+							$location.url('/openproject');
+							console.log("adding row for table "+displayData[tableid].row);
+					};
+					
 				});
 		response.error(function(data, status, headers, config) {
 			if (response.status === 401
@@ -301,81 +383,7 @@ app.controller('projectController',
 			}
 		});
 	
-	//initialize hide/unhide logic
-	$scope.hideEdit = new Array();
-	$scope.hideTextOnly = new Array();
 	
-	for(var n=0; n<displayData.length; n++){
-		$scope.hideEdit[n] = true;
-		$scope.hideTextOnly[n] = false;
-	}
-	
-	//push data into table
-	 $scope.queue = {
-        transactions: []
-    };
-	 for(var i=0; i<displayData.length; i++){
-    	console.log("displayData "+displayData[i]);
-    	 $scope.queue.transactions.push(displayData[i]);
-    }
-	
-	 
-	//on click submit
-	 $scope.updateDetails = function(tableid) {
-		console.log("--> Submitting form updateDetails ");
-		
-		//fetch deatils related to project and pass to projectController
-		console.log("tableid "+displayData[tableid].col_name);
-		var rows_data = new Array();
-		for(var i=0; i<displayData[tableid].row.length; i++){
-			var createKeyValueString = "{";
-			for(var j=0; j<displayData[tableid].col_name.length; j++){
-				//rows_data[i][displayData[tableid].col_name[j]] = displayData[tableid].row[i][j];
-				createKeyValueString = createKeyValueString + "'" + displayData[tableid].col_name[j] +"':'" + displayData[tableid].row[i][j] +"'";
-				if(j<displayData[tableid].col_name.length-1){
-					createKeyValueString = createKeyValueString + ",";
-				}
-			}
-			createKeyValueString = createKeyValueString + "}"
-			rows_data[i] = createKeyValueString;
-		}
-		console.log("rows_data "+rows_data);
-		var updateData = {
-				"tableName":displayData[tableid].tableName,
-				"projectName":"",
-				"tenant_id":"",
-				"rows":rows_data
-		}
-		console.log("updateData "+updateData.tableName);
-	};
-	 
-	 $scope.deleteRow = function(tableid, rowid) {
-			console.log("deleting row for table "+tableid+" "+rowid);
-			$scope.hideEdit[tableid] = true;
-			$scope.hideTextOnly[tableid] = false;
-			console.log("deleting row for table length "+displayData[tableid].row.length);
-			displayData[tableid].row.splice(rowid, 1);
-			console.log("deleting row for table length after "+displayData[tableid].row.length);
-			//$route.reload();
-			$location.url('/openproject');
-			console.log("deleting row for table "+displayData[tableid].row);
-	};
-
-	$scope.addRow = function(tableid) {
-			console.log("adding row for table "+tableid);
-			$scope.hideEdit[tableid] = true;
-			$scope.hideTextOnly[tableid] = false;
-			var rowdata = new Array();
-			for(var i=0; i<displayData[tableid].col_name.length; i++){
-				rowdata[i] = " ";
-			}
-			console.log("adding row for table length "+displayData[tableid].row.length);
-			displayData[tableid].row.splice(displayData[tableid].row.length, 0, rowdata);
-			console.log("adding row for table length after "+displayData[tableid].row.length);
-			//$route.reload();
-			$location.url('/openproject');
-			console.log("adding row for table "+displayData[tableid].row);
-	};
 	
 	console.log('projectController end');
 });
