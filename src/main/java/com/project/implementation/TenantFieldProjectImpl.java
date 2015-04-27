@@ -131,11 +131,11 @@ public class TenantFieldProjectImpl {
 		
 		List<ProjectIdAndNameDTO> ListOfPorjects = new ArrayList<ProjectIdAndNameDTO>();
 		
-		ProjectIdAndNameDTO projectObject = new ProjectIdAndNameDTO();
+		
 		
 		for(Project project : projects)
 		{
-			
+			ProjectIdAndNameDTO projectObject = new ProjectIdAndNameDTO();
 			projectObject.setProjectid(project.getProjectid());
 			projectObject.setProjectname(project.getProjectname());
 			
