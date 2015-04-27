@@ -85,6 +85,42 @@ public class TenantFieldProjectImpl {
 	}
 	
 	
+	public List<String> getProjectIdsByuserId(Integer userid)
+	{
+		List<Project> projects = projectDao.getListOfProjectsByUserId(userid);
+		
+		if(projects == null) { return null; }
+		
+		List<String> ListOfPorjectId = new ArrayList<String>();
+		
+		for(Project project : projects)
+		{
+			ListOfPorjectId.add(project.getProjectid());
+			
+		}
+		
+		return ListOfPorjectId;
+	
+	}
+	
+	public List<String> getProjectNamesByuserId(Integer userid)
+	{
+		List<Project> projects = projectDao.getListOfProjectsByUserId(userid);
+		
+		if(projects == null) { return null; }
+		
+		List<String> ListOfPorjectName = new ArrayList<String>();
+		
+		for(Project project : projects)
+		{
+			ListOfPorjectName.add(project.getProjectname());
+			
+		}
+		
+		return ListOfPorjectName;
+	
+	}
+	
 	
 	
 	

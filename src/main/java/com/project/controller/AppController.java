@@ -228,6 +228,15 @@ public List<String> getAllTenants() {
 	return tenantAndFieldImpl.getDistinctTenants();
 }
 
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getprojectsbyuserid", method = RequestMethod.GET)
+@ResponseBody
+public List<String> getAllProjectIdsByuserId(@CookieValue ("userid") int userid ) {
+
+	return tenantAndFieldImpl.getProjectIdsByuserId(userid);
+}
+
 /***********************************************************************************/
 
 
