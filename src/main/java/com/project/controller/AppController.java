@@ -35,12 +35,14 @@ import com.project.databuffers.ProjectData;
 import com.project.dto.DisplayData;
 import com.project.dto.LoginDTO;
 import com.project.dto.ProjectIdAndNameDTO;
+import com.project.dto.ProjectStatusDTO;
 import com.project.dto.SearchDTO;
 import com.project.dto.UserDTO;
 import com.project.entities.Test;
 import com.project.implementation.IAuthInterfaceForLogin;
 import com.project.implementation.MultiTenantAPIImpl;
 import com.project.implementation.MultiTenantImpl;
+import com.project.implementation.ProjectStatus;
 import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
 import com.project.interceptor.SessionValidatorInterceptor;
@@ -251,6 +253,22 @@ public List<String> getAllProjectIdsByuserId(@CookieValue ("userid") int userid 
 public List<ProjectIdAndNameDTO> getAllProjectIdsByuserId(@CookieValue ("userid") int userid ) {
 
 	return tenantAndFieldImpl.getProjectsByuserId(userid);
+}
+
+
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getProjectStatus", method = RequestMethod.GET)
+@ResponseBody
+public List<String> getProjectStatus(@RequestBody ProjectStatusDTO projectStatusDTO){
+	//String project_Id = "P84557795";;
+	//String tenant_Id = "GANTTER";
+	
+	List<String> projectStatus_list = new ArrayList<String>();
+	ProjectStatus projectStatus = new ProjectStatus();
+	projectStatus_list = projectStatus.getProjectCompletionStatus(projectStatusDTO.getProject_Id(), projectStatusDTO.getTenant_Id());
+
+	return projectStatus_list;
 }
 
 

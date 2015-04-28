@@ -9,6 +9,7 @@ public class DisplayData {
 	String tableName;
 	List<String> col_name;
 	List<List<String>> row;
+	String projectStatus;
 	
 	public String getTableName() {
 		return tableName;
@@ -33,6 +34,12 @@ public class DisplayData {
 	}
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+	public String getProjectStatus() {
+		return projectStatus;
+	}
+	public void setProjectStatus(String projectStatus) {
+		this.projectStatus = projectStatus;
 	}
 }
 
