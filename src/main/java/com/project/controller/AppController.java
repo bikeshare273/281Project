@@ -33,6 +33,7 @@ import com.project.dao.ITestDao;
 import com.project.databuffers.NewProjectDTO;
 import com.project.databuffers.ProjectData;
 import com.project.dto.DisplayData;
+import com.project.dto.GraphData;
 import com.project.dto.LoginDTO;
 import com.project.dto.ProjectIdAndNameDTO;
 import com.project.dto.ProjectStatusDTO;
@@ -42,6 +43,7 @@ import com.project.entities.Test;
 import com.project.implementation.IAuthInterfaceForLogin;
 import com.project.implementation.MultiTenantAPIImpl;
 import com.project.implementation.MultiTenantImpl;
+import com.project.implementation.ProjectGraphData;
 import com.project.implementation.ProjectStatus;
 import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
@@ -78,6 +80,12 @@ public class AppController extends WebMvcConfigurerAdapter{
 	
 	@Autowired
 	MultiTenantAPIImpl apiImpl;
+	
+	@Autowired
+	ProjectStatus projectStatus;
+	
+	@Autowired
+	ProjectGraphData projectGraphData;
 	
 /***********************************************************************************************/
 
@@ -256,22 +264,29 @@ public List<ProjectIdAndNameDTO> getAllProjectIdsByuserId(@CookieValue ("userid"
 }
 
 
-
 @ResponseStatus(HttpStatus.OK)
-@RequestMapping(value = "/getProjectStatus", method = RequestMethod.GET)
+@RequestMapping(value = "/getProjectStatus", method = RequestMethod.POST)
 @ResponseBody
 public List<String> getProjectStatus(@RequestBody ProjectStatusDTO projectStatusDTO){
-	//String project_Id = "P84557795";;
-	//String tenant_Id = "GANTTER";
 	
 	List<String> projectStatus_list = new ArrayList<String>();
-	ProjectStatus projectStatus = new ProjectStatus();
-	projectStatus_list = projectStatus.getProjectCompletionStatus(projectStatusDTO.getProject_Id(), projectStatusDTO.getTenant_Id());
+	projectStatus_list = projectStatus.getProjectCompletionStatus(projectStatusDTO.getProject_Id());
 
 	return projectStatus_list;
 }
 
 
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getProjectGraphData", method = RequestMethod.POST)
+@ResponseBody
+public GraphData getProjectGraphData(@RequestBody ProjectStatusDTO projectStatusDTO){
+	
+	String project_Id = projectStatusDTO.getProject_Id();
+	GraphData graphData = new GraphData();
+	graphData = projectGraphData.getGraphData(project_Id);
+
+	return graphData;
+}
 
 /***********************************************************************************/
 

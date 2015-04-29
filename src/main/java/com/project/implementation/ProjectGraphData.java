@@ -1,7 +1,6 @@
 package com.project.implementation;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,41 +11,41 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.project.dto.GraphData;
 import com.project.util.NoSqlConnection;
 
-public class ProjectStatus {
+public class ProjectGraphData {
 	
 	@Autowired
 	TenantFieldProjectImpl tenantFieldProjectImpl;
 	
 	MongoTemplate mongoTemplate = NoSqlConnection.getConnection();
 	
-	public ArrayList<String> getProjectCompletionStatus(String project_Id){
+	public GraphData getGraphData(String project_Id){
+		GraphData graphData = new GraphData();
+		
 		String tenant_Id = tenantFieldProjectImpl.getTenantIdByProjectId(project_Id);
 		
-		ArrayList<String> completionStatus = new ArrayList<String>();
-		
 		if(tenant_Id.equalsIgnoreCase("GANTTER")){
-			completionStatus = getGantterStatus(project_Id);
-				
-		}else if(tenant_Id.equalsIgnoreCase("KANBAN")){		
-			completionStatus = getKanbanStatus(project_Id);
+			graphData = getGantterGraphData(project_Id);
 			
-		}else if (tenant_Id.equalsIgnoreCase("SCRUM")) {
+		}else if(tenant_Id.equalsIgnoreCase("KANBAN")){
+			graphData = getKanbanGraphData(project_Id);
+			
+		}else if(tenant_Id.equalsIgnoreCase("SCRUM")){
 			
 		}
 		
-		return completionStatus;
+		return graphData;
 	}
-	
-	public ArrayList<String> getGantterStatus(String project_Id){
+
+	public GraphData getGantterGraphData(String project_Id){
+		GraphData graphData = new GraphData();
 		
-		ArrayList<String> arrayList_projectStatus = new ArrayList<String>();
-		int num_tasks_completed = 0;
-		int total_tasks = 0;
+		int completed_tasks = 0;
 		
 		DBCollection dbCollection = mongoTemplate.getCollection("tenant_data");
-			
+		
 		BasicDBObject query = new BasicDBObject("Project_Id",project_Id);
 		DBCursor dbCursor = dbCollection.find(query); 
 		
@@ -56,40 +55,45 @@ public class ProjectStatus {
 		if(dbCursor.hasNext()){
 			dbObject = dbCursor.next();			
 		}
+		
 		dbCursor.close();
 		
 		dbObject_tenantData = (DBObject)dbObject.get("Tenant_Data");
 		BasicDBList basicDBList = (BasicDBList)dbObject_tenantData.get("TASK");
 		
-		total_tasks = basicDBList.size();
-		
 		BasicDBObject basicDBObject;
 		Iterator iterator = basicDBList.iterator();
+		
 		while(iterator.hasNext()){
 			basicDBObject = (BasicDBObject) iterator.next();
 			if(basicDBObject.get("Task_Status").equals("Completed")){
-				num_tasks_completed++;
+				completed_tasks++;
 			}
 		}
 		
-		Double calculate = ((double)num_tasks_completed /total_tasks) * 100;
-					
-		DecimalFormat onePointPrecision = new DecimalFormat("#.#");
-		calculate = Double.valueOf(onePointPrecision.format(calculate));
+		graphData.setxName("Number of tasks");
+		graphData.setyName("Task Status");
 		
-		arrayList_projectStatus.add("Project Complete: "+ calculate.toString() + "%");
+		HashMap<String, String> xData = new HashMap<String, String>();
+		HashMap<String, String> yData = new HashMap<String, String>();
 		
-		return arrayList_projectStatus;
+		xData.put("Completed", String.valueOf(completed_tasks));
+		graphData.setxData(xData);
+		
+		yData.put("Completed", "Completed");
+		graphData.setyData(yData);
+		
+		System.out.println("Graph:"+graphData.toString());
+		
+		return graphData;
 	}
 	
 	
-	public ArrayList<String> getKanbanStatus(String project_Id){
-	
-		ArrayList<String> arrayList_projectStatus = new ArrayList<String>();
-		
+	public GraphData getKanbanGraphData(String project_Id){
+		GraphData graphData = new GraphData();
 		int requested_tasks = 0;
+		int inProgress_tasks = 0;
 		int completed_tasks = 0;
-		int inprogress_tasks = 0;
 		
 		DBCollection dbCollection = mongoTemplate.getCollection("tenant_data");
 		
@@ -117,14 +121,32 @@ public class ProjectStatus {
 			}else if(basicDBObject.get("Task_Status").equals("Requested")){
 				requested_tasks++;
 			}else if(basicDBObject.get("Task_Status").equals("In Progress")){
-				inprogress_tasks++;
+				inProgress_tasks++;	
 			}
 		}
+			
+		graphData.setxName("Number of tasks");
+		graphData.setyName("Task Status");
 		
-		arrayList_projectStatus.add("Requested Tasks:"+requested_tasks);
-		arrayList_projectStatus.add("In-Progress Tasks:"+inprogress_tasks);
-		arrayList_projectStatus.add("Completed Tasks:"+completed_tasks);
+		HashMap<String, String> xData = new HashMap<String, String>();
+		HashMap<String, String> yData = new HashMap<String, String>();
 		
-		return arrayList_projectStatus;
+		xData.put("Completed", String.valueOf(completed_tasks));
+		xData.put("In-Progress", String.valueOf(inProgress_tasks));
+		xData.put("Requested", String.valueOf(requested_tasks));
+		graphData.setxData(xData);
+		
+		yData.put("Completed", "Completed");
+		yData.put("In-Progress", "In-Progress");
+		yData.put("Requested", "Requested");
+		graphData.setyData(yData);
+		
+		System.out.println("Graph:"+graphData.toString());
+		
+		return graphData;
 	}
+	
 }
+
+
+

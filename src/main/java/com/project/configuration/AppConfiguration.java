@@ -27,6 +27,8 @@ import com.project.implementation.AuthImplementation;
 import com.project.implementation.IAuthInterfaceForLogin;
 import com.project.implementation.MultiTenantAPIImpl;
 import com.project.implementation.MultiTenantImpl;
+import com.project.implementation.ProjectGraphData;
+import com.project.implementation.ProjectStatus;
 import com.project.implementation.TenantFieldProjectImpl;
 import com.project.implementation.UserImpl;
 import com.project.interceptor.SessionValidatorInterceptor;
@@ -65,6 +67,15 @@ public class AppConfiguration {
 		return new MultiTenantAPIImpl();
 	}
 	
+	@Bean
+	public ProjectStatus getProjectStatus(){
+		return new ProjectStatus();
+	}
+	
+	@Bean
+	public ProjectGraphData getProjectGraphData(){
+		return new ProjectGraphData();
+	}
 	
 	/********************************************************************************************************************/
 
