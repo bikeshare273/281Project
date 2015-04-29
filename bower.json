@@ -10,6 +10,7 @@
         "bootstrap": "3.3.4",
         "fontawesome": "~4.1.0",
         "angular-route": "1.4.0-build.3962+sha.fe9cd9d",
-        "angular-resource": "1.4.0-build.3962+sha.fe9cd9d"
+        "angular-resource": "1.4.0-build.3962+sha.fe9cd9d",
+        "angular-google-chart":"0.0.11"
     }
 }

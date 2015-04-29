@@ -28,6 +28,22 @@
 			</div>
 		</div>
 		<div class="col-md-3">
+			<div class="col-md-12">
+				<div class="col-md-4"></div>
+				<div class="col-md-8">
+					<button class="btn btn-default btn-block " type="button" ng-click="openGraph();">Visualize Progress</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
+	
+	<div class="col-md-12" style="padding-top:40px; padding-bottom:40px;" ng-hide="hideGraph">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-8" style="font-weight: bold;">
+			<div google-chart chart="chartObject" style="{{cssStyle}}"/>
 		</div>
 		<div class="col-md-3">
 		</div>

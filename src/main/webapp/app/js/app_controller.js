@@ -1,4 +1,4 @@
-var app = angular.module('app', [ 'ngRoute', 'ngResource', 'smart-table' ]);
+var app = angular.module('app', [ 'ngRoute', 'ngResource', 'smart-table', 'googlechart']);
 
 app.run(function($rootScope) {
 	$rootScope.hideUserNavTabs = true;
@@ -265,6 +265,8 @@ app.controller('projectController',
 	$rootScope.hideUserNavTabs = false;
 	$rootScope.hideStaticTabs = true;
 	
+	$scope.hideGraph = false;
+	
 	$scope.tableCounterOne = 0;
 	
 	//get project id
@@ -436,6 +438,90 @@ app.controller('projectController',
 			}
 		});
 	
+		//open graph
+		$scope.openGraph = function() {
+			console.log("openGraph projectid "+projectid);
+				
+			//create project
+			var data = {
+					project_Id : projectid,
+				};
+				var response = $http.post("../../api/v1/getProjectGraphData", data,
+						{});
+				response
+						.success(function(dataFromServer, status,
+								headers, config) {
+							console.log(dataFromServer);
+							
+							/*$scope.chart.type = $routeParams.chartType;*/
+							$scope.chartObject = new Object();
+						    $scope.chartObject.options = {
+						        'title': 'Visualize '+$scope.project_name+' progress'
+						    }
+						    $scope.chartObject.type = dataFromServer.chartType;
+						    var chartRows = new Array();
+						    //colsGraph == rows
+						    var colsGraph = new Array();
+						    for(var i=0; i<dataFromServer.xData.length; i++){
+						    	var tempArray = new Array();
+						    	var tempObjTaskName = {
+						    			v:dataFromServer.xData[i].rowName
+						    	};
+						    	tempArray[0] = tempObjTaskName;
+						    	var tempObjTaskValue = {
+						    			v:dataFromServer.xData[i].rowValue
+						    	};
+						    	tempArray[1] = tempObjTaskValue;
+						    	var colObject = {
+						    			c:tempArray
+						    	}
+						    	colsGraph[i] = colObject;
+						    	console.log("in "+colObject);
+						    }
+						    console.log("colsGraph==rows-> "+colsGraph[0]);
+						    $scope.chartObject.data = {
+						    		"rows":colsGraph
+						    };
+						    $scope.chartObject.data = {
+						    		"cols": [
+						    		         {
+						    		           "id": dataFromServer.yName,
+						    		           "label": dataFromServer.yName,
+						    		           "type": "string",
+						    		           "p": {}
+						    		         },
+						    		         {
+						    		           "id": dataFromServer.xName,
+						    		           "label": dataFromServer.xName,
+						    		           "type": "number",
+						    		           "p": {}
+						    		         }
+						    		 ],
+						    		"rows":colsGraph,
+						    		"vAxis": {
+						    		      "title": dataFromServer.xName
+						    		      /*"gridlines": {
+						    		        "count": 6
+						    		      }*/
+						    		    },
+					    		    "hAxis": {
+					    		      "title": dataFromServer.yName
+					    		    }
+						    };
+						    
+							$scope.hideGraph = false;
+						});
+				response.error(function(data, status, headers, config) {
+					if (response.status === 401
+							|| response.status === 400) {
+						$scope.error = "Invalid request";
+						$location.url('/');
+						return $q.reject(response);
+					}
+				});
+			
+			//$location.url('/opennewproject');
+		};
 	
 	
 	console.log('projectController end');

@@ -1,13 +1,15 @@
 package com.project.dto;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class GraphData {
 	
+	private String chartType;
 	private String xName;
 	private String yName;
-	private HashMap<String, String> xData;
-	private HashMap<String, String> yData;
+	/*private HashMap<String, String> xData;
+	private HashMap<String, String> yData;*/
+	private List<GraphPlotValueDTO> xData;
 	
 	public String getxName() {
 		return xName;
@@ -21,17 +23,18 @@ public class GraphData {
 	public void setyName(String yName) {
 		this.yName = yName;
 	}
-	public HashMap<String, String> getxData() {
+	public List<GraphPlotValueDTO> getxData() {
 		return xData;
 	}
-	public void setxData(HashMap<String, String> xData) {
+	public void setxData(List<GraphPlotValueDTO> xData) {
 		this.xData = xData;
 	}
-	public HashMap<String, String> getyData() {
-		return yData;
+	public String getChartType() {
+		return chartType;
 	}
-	public void setyData(HashMap<String, String> yData) {
-		this.yData = yData;
+	public void setChartType(String chartType) {
+		this.chartType = chartType;
 	}
+	
 
 }

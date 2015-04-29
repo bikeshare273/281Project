@@ -1,7 +1,10 @@
 package com.project.implementation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,6 +15,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.project.dto.GraphData;
+import com.project.dto.GraphPlotValueDTO;
 import com.project.util.NoSqlConnection;
 
 public class ProjectGraphData {
@@ -77,12 +81,18 @@ public class ProjectGraphData {
 		HashMap<String, String> xData = new HashMap<String, String>();
 		HashMap<String, String> yData = new HashMap<String, String>();
 		
-		xData.put("Completed", String.valueOf(completed_tasks));
-		graphData.setxData(xData);
+		//xData.put("Completed", String.valueOf(completed_tasks));
+		//graphData.setxData(xData);
+		GraphPlotValueDTO graphPlotValueDTO = new GraphPlotValueDTO();
+		graphPlotValueDTO.setRowName("Completed");
+		graphPlotValueDTO.setRowValue(completed_tasks);
+		List<GraphPlotValueDTO> rows = new ArrayList<GraphPlotValueDTO>();
+		rows.add(graphPlotValueDTO);
+		graphData.setxData(rows);
 		
 		yData.put("Completed", "Completed");
-		graphData.setyData(yData);
 		
+		graphData.setChartType("LineChart");
 		System.out.println("Graph:"+graphData.toString());
 		
 		return graphData;
@@ -128,22 +138,35 @@ public class ProjectGraphData {
 		graphData.setxName("Number of tasks");
 		graphData.setyName("Task Status");
 		
-		HashMap<String, String> xData = new HashMap<String, String>();
+		HashMap<String, Integer> xData = new HashMap<String, Integer>();
 		HashMap<String, String> yData = new HashMap<String, String>();
 		
-		xData.put("Completed", String.valueOf(completed_tasks));
-		xData.put("In-Progress", String.valueOf(inProgress_tasks));
-		xData.put("Requested", String.valueOf(requested_tasks));
-		graphData.setxData(xData);
+		xData.put("Completed", completed_tasks);
+		xData.put("In-Progress", inProgress_tasks);
+		xData.put("Requested", requested_tasks);
+		List<GraphPlotValueDTO> graphPlotValueDTOs = covertMapToGraphPlotValueDTOList(xData);
+		graphData.setxData(graphPlotValueDTOs);
 		
-		yData.put("Completed", "Completed");
+		/*yData.put("Completed", "Completed");
 		yData.put("In-Progress", "In-Progress");
 		yData.put("Requested", "Requested");
-		graphData.setyData(yData);
+		graphData.setyData(yData);*/
 		
+		graphData.setChartType("BarChart");
 		System.out.println("Graph:"+graphData.toString());
 		
 		return graphData;
+	}
+	
+	private List<GraphPlotValueDTO> covertMapToGraphPlotValueDTOList(HashMap<String, Integer> map){
+		List<GraphPlotValueDTO> list = new ArrayList<GraphPlotValueDTO>();
+		for(Entry<String, Integer> entry : map.entrySet()){
+			GraphPlotValueDTO graphPlotValueDTO = new GraphPlotValueDTO();
+			graphPlotValueDTO.setRowName(entry.getKey());
+			graphPlotValueDTO.setRowValue(entry.getValue());
+			list.add(graphPlotValueDTO);
+		}
+		return list;
 	}
 	
 }
