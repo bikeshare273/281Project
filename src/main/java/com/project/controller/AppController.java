@@ -258,7 +258,7 @@ public List<ProjectIdAndNameDTO> getAllProjectIdsByuserId(@CookieValue ("userid"
 
 
 @ResponseStatus(HttpStatus.OK)
-@RequestMapping(value = "/getProjectStatus", method = RequestMethod.GET)
+@RequestMapping(value = "/getProjectStatus", method = RequestMethod.POST)
 @ResponseBody
 public List<String> getProjectStatus(@RequestBody ProjectStatusDTO projectStatusDTO){
 	//String project_Id = "P84557795";;
