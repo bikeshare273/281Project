@@ -271,6 +271,27 @@ app.controller('projectController',
 	var projectid = dataSharing.get().projectid;
 	console.log("projectid received "+projectid);
 	
+	//fetch project status
+	var statusData = {
+			project_Id : projectid,
+		};
+		var response = $http.post("../../api/v1/getProjectStatus", statusData,
+				{});
+		response
+				.success(function(dataFromServer, status,
+						headers, config) {
+					console.log(dataFromServer);
+					$scope.projectStatus = dataFromServer;
+				});
+		response.error(function(data, status, headers, config) {
+			if (response.status === 401
+					|| response.status === 400) {
+				$scope.error = "Invalid request";
+				$location.url('/');
+				return $q.reject(response);
+			}
+		});
+	
 	//details about project
 	/*var displayData = new Array();
 	displayData[0] = {

@@ -15,6 +15,23 @@
 		<div class="col-md-3">
 		</div>
 	</div>
+	
+	<div class="col-md-12" style="padding-top:40px; padding-bottom:40px;">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-2" style="font-weight: bold;">
+			Project Status :
+		</div>
+		<div class="col-md-2">
+			<div ng-repeat="pstatus in projectStatus track by $index">
+				{{projectStatus[$index]}}</br>
+			</div>
+		</div>
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-3">
+		</div>
+	</div>
 
 	<div class="col-md-12" style="padding-top:80px; padding-bottom:50px;" ng-repeat="transaction in queue.transactions track by $index" 
 		ng-hide="tableCounterOne = $index;clickedEditable">
