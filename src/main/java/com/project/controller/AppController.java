@@ -279,14 +279,33 @@ public List<String> getProjectStatus(@RequestBody ProjectStatusDTO projectStatus
 @ResponseStatus(HttpStatus.OK)
 @RequestMapping(value = "/getProjectGraphData", method = RequestMethod.POST)
 @ResponseBody
-public GraphData getProjectGraphData(@RequestBody ProjectStatusDTO projectStatusDTO){
+public List<GraphData> getProjectGraphData(@RequestBody ProjectStatusDTO projectStatusDTO){
 	
 	String project_Id = projectStatusDTO.getProject_Id();
-	GraphData graphData = new GraphData();
+	List<GraphData> graphData = new ArrayList<GraphData>();
 	graphData = projectGraphData.getGraphData(project_Id);
+	
+	
 
 	return graphData;
 }
+
+@ResponseStatus(HttpStatus.OK)
+@RequestMapping(value = "/getscrum", method = RequestMethod.GET)
+@ResponseBody
+public List<GraphData> getScrum(){
+	
+	String project_Id = "P55667788";
+	GraphData graphData = new GraphData();
+	List<GraphData> graph = projectGraphData.getScrumGraphData(project_Id);
+
+	
+	// getScrumGraphData
+	
+
+	return graph;
+}
+
 
 /***********************************************************************************/
 

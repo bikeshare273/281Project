@@ -10,6 +10,7 @@ public class GraphData {
 	/*private HashMap<String, String> xData;
 	private HashMap<String, String> yData;*/
 	private List<GraphPlotValueDTO> xData;
+	private String sprint_Id;
 	
 	public String getxName() {
 		return xName;
@@ -34,6 +35,12 @@ public class GraphData {
 	}
 	public void setChartType(String chartType) {
 		this.chartType = chartType;
+	}
+	public String getSprint_Id() {
+		return sprint_Id;
+	}
+	public void setSprint_Id(String sprint_Id) {
+		this.sprint_Id = sprint_Id;
 	}
 	
 
