@@ -459,7 +459,7 @@ app.controller('projectController',
 								
 								/*$scope.chart.type = $routeParams.chartType;*/
 								var chartObject = new Object();
-								if(i == 0){
+								if(z == 0){
 										chartObject.options = {
 									        'title': 'Visualize '+$scope.project_name+' progress'
 									    }
