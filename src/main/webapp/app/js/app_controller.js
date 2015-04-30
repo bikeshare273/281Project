@@ -444,7 +444,8 @@ app.controller('projectController',
 				
 			//create project
 			var data = {
-					project_Id : projectid,
+					project_Id : projectid
+					//project_Id : "P55667788"
 				};
 				var response = $http.post("../../api/v1/getProjectGraphData", data,
 						{});
@@ -453,62 +454,74 @@ app.controller('projectController',
 								headers, config) {
 							console.log(dataFromServer);
 							
-							/*$scope.chart.type = $routeParams.chartType;*/
-							$scope.chartObject = new Object();
-						    $scope.chartObject.options = {
-						        'title': 'Visualize '+$scope.project_name+' progress'
-						    }
-						    $scope.chartObject.type = dataFromServer.chartType;
-						    var chartRows = new Array();
-						    //colsGraph == rows
-						    var colsGraph = new Array();
-						    for(var i=0; i<dataFromServer.xData.length; i++){
-						    	var tempArray = new Array();
-						    	var tempObjTaskName = {
-						    			v:dataFromServer.xData[i].rowName
-						    	};
-						    	tempArray[0] = tempObjTaskName;
-						    	var tempObjTaskValue = {
-						    			v:dataFromServer.xData[i].rowValue
-						    	};
-						    	tempArray[1] = tempObjTaskValue;
-						    	var colObject = {
-						    			c:tempArray
-						    	}
-						    	colsGraph[i] = colObject;
-						    	console.log("in "+colObject);
-						    }
-						    console.log("colsGraph==rows-> "+colsGraph[0]);
-						    $scope.chartObject.data = {
-						    		"rows":colsGraph
-						    };
-						    $scope.chartObject.data = {
-						    		"cols": [
-						    		         {
-						    		           "id": dataFromServer.yName,
-						    		           "label": dataFromServer.yName,
-						    		           "type": "string",
-						    		           "p": {}
-						    		         },
-						    		         {
-						    		           "id": dataFromServer.xName,
-						    		           "label": dataFromServer.xName,
-						    		           "type": "number",
-						    		           "p": {}
-						    		         }
-						    		 ],
-						    		"rows":colsGraph,
-						    		"vAxis": {
-						    		      "title": dataFromServer.xName
-						    		      /*"gridlines": {
-						    		        "count": 6
-						    		      }*/
-						    		    },
-					    		    "hAxis": {
-					    		      "title": dataFromServer.yName
-					    		    }
-						    };
-						    
+							$scope.chartObjects = new Array();
+							for(var z=0; z<dataFromServer.length; z++){
+								
+								/*$scope.chart.type = $routeParams.chartType;*/
+								var chartObject = new Object();
+								if(i == 0){
+										chartObject.options = {
+									        'title': 'Visualize '+$scope.project_name+' progress'
+									    }
+								}else{
+										chartObject.options = {
+									        'title': 'Sprint '+dataFromServer[z].sprint_Id
+									    }
+								}
+							    chartObject.type = dataFromServer[z].chartType;
+							    var chartRows = new Array();
+							    //colsGraph == rows
+							    var colsGraph = new Array();
+							    for(var i=0; i<dataFromServer[z].xData.length; i++){
+							    	var tempArray = new Array();
+							    	var tempObjTaskName = {
+							    			v:dataFromServer[z].xData[i].rowName
+							    	};
+							    	tempArray[0] = tempObjTaskName;
+							    	var tempObjTaskValue = {
+							    			v:dataFromServer[z].xData[i].rowValue
+							    	};
+							    	tempArray[1] = tempObjTaskValue;
+							    	var colObject = {
+							    			c:tempArray
+							    	}
+							    	colsGraph[i] = colObject;
+							    	console.log("in "+colObject);
+							    }
+							    console.log("colsGraph==rows-> "+colsGraph[0]);
+							    chartObject.data = {
+							    		"rows":colsGraph
+							    };
+							    chartObject.data = {
+							    		"cols": [
+							    		         {
+							    		           "id": dataFromServer[z].yName,
+							    		           "label": dataFromServer[z].yName,
+							    		           "type": "string",
+							    		           "p": {}
+							    		         },
+							    		         {
+							    		           "id": dataFromServer[z].xName,
+							    		           "label": dataFromServer[z].xName,
+							    		           "type": "number",
+							    		           "p": {}
+							    		         }
+							    		 ],
+							    		"rows":colsGraph,
+							    		"vAxis": {
+							    		      "title": dataFromServer[z].xName
+							    		      /*"gridlines": {
+							    		        "count": 6
+							    		      }*/
+							    		    },
+						    		    "hAxis": {
+						    		      "title": dataFromServer[z].yName
+						    		    }
+							    };
+
+							    $scope.chartObjects[z] = chartObject;
+							}
+													    
 							$scope.hideGraph = false;
 						});
 				response.error(function(data, status, headers, config) {

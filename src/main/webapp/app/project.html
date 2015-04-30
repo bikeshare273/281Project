@@ -43,7 +43,7 @@
 		<div class="col-md-1">
 		</div>
 		<div class="col-md-8" style="font-weight: bold;">
-			<div google-chart chart="chartObject" style="{{cssStyle}}"/>
+			<div ng-repeat="chartObject in chartObjects track by $index"	google-chart chart="chartObjects[$index]" style="{{cssStyle}}"/>
 		</div>
 		<div class="col-md-3">
 		</div>
