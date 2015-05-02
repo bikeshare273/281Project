@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.project.dao.ProjectDao;
 import com.project.databuffers.ProjectData;
 import com.project.entities.Project;
@@ -50,6 +52,17 @@ public class MultiTenantAPIImpl {
 		Iterator<HashMap<String,String>> iterator = arrayList.iterator();	 //rows in table	
 		DBCollection dbCollection =  mongoTemplate.getCollection("tenant_data");
 		BasicDBObject query = new BasicDBObject("Project_Id",projectId);
+		
+		DBCursor dbCursor = dbCollection.find(query); 
+		if(dbCursor.hasNext()){
+			DBObject dbObject = (DBObject)dbCursor.next();
+			String project_name = (String)dbObject.get("Project_Name");
+			
+			if(project_name!=null){
+				projectData.setProjectName(project_name);
+			}
+		}
+		dbCursor.close();
 		
 		//save project name
 		BasicDBObject dbObject_projectname = new BasicDBObject("Project_Name",projectData.getProjectName());
