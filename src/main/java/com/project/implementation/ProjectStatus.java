@@ -166,9 +166,7 @@ public class ProjectStatus {
 		while(sprintIterator.hasNext())
 		{
 
-			System.out.println("----------------sprint 1----------");
-
-
+		
 			int totalRemainingHours=0;
 
 			DBObject dbObject_sprint=(DBObject) sprintIterator.next();

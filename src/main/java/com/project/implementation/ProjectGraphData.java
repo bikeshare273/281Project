@@ -212,7 +212,7 @@ public class ProjectGraphData {
 
 		while(sprintIterator.hasNext())
 		{
-            System.out.println("----------------sprint 1----------");
+            
 			GraphData graphData = new GraphData();
 			graphData.setxName("Date");
 			graphData.setyName("Remaining Hours");
@@ -242,8 +242,7 @@ public class ProjectGraphData {
 			}
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(sprintDate);
- 	    //   cal.add(Calendar.DATE, 1); 
-			//cal.getTime();
+ 	    
 
 			BasicDBList backlogList=(BasicDBList) dbObject_tenantData.get("BACKLOG");
 
@@ -263,12 +262,12 @@ public class ProjectGraphData {
 
 			}
 
-			//System.out.println("total remaining hours  :  "+totalRemainingHours);
+			
 			
 			GraphPlotValueDTO gplot=new GraphPlotValueDTO();
 			gplot.setRowName(cal.getTime().toString());
 			
-			//System.out.println("date  : "+cal.getTime());
+			
 			gplot.setRowValue(totalRemainingHours);
 
 			graphValues.add(gplot);
@@ -290,9 +289,6 @@ public class ProjectGraphData {
 		
 			graphData.setxData(graphValues);
 
-			
-			//System.out.println("GraphValues:"+ graphValues.toString());
-			
 			graphDataList.add(graphData);   
 
 		}

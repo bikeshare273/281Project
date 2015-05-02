@@ -290,21 +290,7 @@ public List<GraphData> getProjectGraphData(@RequestBody ProjectStatusDTO project
 	return graphData;
 }
 
-@ResponseStatus(HttpStatus.OK)
-@RequestMapping(value = "/getscrum", method = RequestMethod.GET)
-@ResponseBody
-public List<GraphData> getScrum(){
-	
-	String project_Id = "P55667788";
-	GraphData graphData = new GraphData();
-	List<GraphData> graph = projectGraphData.getScrumGraphData(project_Id);
 
-	
-	// getScrumGraphData
-	
-
-	return graph;
-}
 
 
 /***********************************************************************************/

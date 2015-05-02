@@ -111,16 +111,11 @@ public class MultiTenantAPIImpl {
 		BasicDBObject dbObject = new BasicDBObject();
 		List<String> tablesForTenant = tenantFieldProjectImpl.getAllTablesForATenant(Tenant_Id);
 		for(String table_name : tablesForTenant){
-			System.out.println("Table Name -"+table_name+" for tenant-"+Tenant_Id);
+			
 			dbObject.append(table_name, new BasicDBList());
 		}
 		
 		
-		BasicDBList basicDBList1 = new BasicDBList();
-		BasicDBList basicDBList2 = new BasicDBList();
-		
-		dbObject.append("Tasks", basicDBList1);
-		dbObject.append("Resources", basicDBList2);
 		
 		basicDBObject.put("Tenant_Data", dbObject);
 		
