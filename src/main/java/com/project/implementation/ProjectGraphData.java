@@ -100,7 +100,8 @@ public class ProjectGraphData {
 
 		yData.put("Completed", "Completed");
 
-		graphData.setChartType("LineChart");
+		//graphData.setChartType("LineChart");
+		graphData.setChartType("BarChart");
 		System.out.println("Graph:"+graphData.toString());
 
 		graphDataList.add(graphData);
@@ -162,7 +163,8 @@ public class ProjectGraphData {
 		yData.put("Requested", "Requested");
 		graphData.setyData(yData);*/
 
-		graphData.setChartType("BarChart");
+		//graphData.setChartType("BarChart");
+		graphData.setChartType("PieChart");
 		System.out.println("Graph:"+graphData.toString());
 
 		graphDataList.add(graphData);

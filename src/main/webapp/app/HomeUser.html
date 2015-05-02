@@ -7,7 +7,7 @@
 		<div class="col-md-3">
 			<select id="projectdropdown" class="form-control" data-role="listview"  ng-model="projectdropdown" >
 				<option value="">Select Project</option>
-				<option ng-repeat="project in projectlist track by $index" value="{{project.projectid}}">{{project.projectid}}</option>
+				<option ng-repeat="project in projectlist track by $index" value="{{project.projectid}}">{{project.projectid +" : "+ project.projectname}}</option>
 	        </select>
 		</div>
 		<div class="col-md-2">
