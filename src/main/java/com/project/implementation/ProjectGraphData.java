@@ -261,9 +261,7 @@ public class ProjectGraphData {
 				}
 
 			}
-
-			
-			
+		
 			GraphPlotValueDTO gplot=new GraphPlotValueDTO();
 			gplot.setRowName(cal.getTime().toString());
 			

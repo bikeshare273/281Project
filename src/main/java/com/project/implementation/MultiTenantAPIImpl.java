@@ -31,7 +31,7 @@ public class MultiTenantAPIImpl {
 	ProjectDao projectDao;
 	
 	public static MongoTemplate mongoTemplate = NoSqlConnection.getConnection();
-	
+
 	private ArrayList<HashMap<String, String>> arrayList;
 	private HashMap<String, String> projectdata_hashMap;
 	private BasicDBObject basicDBObject;
@@ -40,20 +40,8 @@ public class MultiTenantAPIImpl {
 	private StringBuilder json;
 	
 	public boolean updateProject(ProjectData projectData){
-		
-		/*
-		ArrayList<String> arrayList_tableFields = new ArrayList<String>();
-		arrayList_tableFields.add("task_id");
-		arrayList_tableFields.add("start_date");
-		arrayList_tableFields.add("end_date");
-		arrayList_tableFields.add("worker");
-		Iterator<String> itr_arrayList_tableFields = arrayList_tableFields.iterator();
-		*/
-				
+
 		boolean insert = false;
-		
-		//arrayList = new ArrayList<HashMap<String,String>>();
-		
 		String projectId = projectData.getProjectId();
 		
 		String tableName = projectData.getTableName();
@@ -63,13 +51,12 @@ public class MultiTenantAPIImpl {
 		DBCollection dbCollection =  mongoTemplate.getCollection("tenant_data");
 		BasicDBObject query = new BasicDBObject("Project_Id",projectId);
 		
-		BasicDBList basicDBList = new BasicDBList();
-		
+		//save project name
+		BasicDBObject dbObject_projectname = new BasicDBObject("Project_Name",projectData.getProjectName());
 		
 		//clear array
 		BasicDBObject clear = new BasicDBObject("$set",new BasicDBObject("Tenant_Data."+tableName,new BasicDBList()));
 		dbCollection.update(query, clear, true, false);
-		
 		
 		while(iterator.hasNext()){
 			projectdata_hashMap = iterator.next();	//data of 1 row		
@@ -81,7 +68,9 @@ public class MultiTenantAPIImpl {
 			}
 			
 			BasicDBObject set1 = new BasicDBObject("Tenant_Data."+tableName,basicDBObject);
-			BasicDBObject set = new BasicDBObject("$push",set1);
+			BasicDBObject set = new BasicDBObject();			
+			set.append("$set",dbObject_projectname); 
+			set.append("$push",set1);
 			
 			dbCollection.update(query, set, true, false);
 			basicDBObject.clear();
@@ -94,16 +83,12 @@ public class MultiTenantAPIImpl {
 	public String createProject(String Tenant_Id, Integer user_Id, String project_name){		
 		
 		Integer id = apputils.generateIdValue(2000);
-		
-		String prefix = "P";
-				
-		
+		String prefix = "P";			
 		String project_Id = prefix + id ;
-		
-		
+				
 		basicDBObject = new BasicDBObject();
 		basicDBObject.put("Project_Id", project_Id);
-		basicDBObject.put("Project_Name", project_name);
+		//basicDBObject.put("Project_Name", project_name);
 		
 		basicDBObject.put("User_Id", user_Id);
 		basicDBObject.put("Tenant_Id", Tenant_Id);
@@ -114,9 +99,7 @@ public class MultiTenantAPIImpl {
 			
 			dbObject.append(table_name, new BasicDBList());
 		}
-		
-		
-		
+	
 		basicDBObject.put("Tenant_Data", dbObject);
 		
 		mongoTemplate.save(basicDBObject, "tenant_data");
@@ -131,12 +114,10 @@ public class MultiTenantAPIImpl {
 		project.setUsername("TESTUSER");
 		
 		projectDao.save(project);
-		
-		
+				
 		basicDBObject.clear();
 		
 		return project_Id;
 	}
-	
 	
 }

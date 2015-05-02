@@ -121,11 +121,11 @@ public class ProjectStatus {
 
 		while(iterator.hasNext()){
 			basicDBObject = (BasicDBObject) iterator.next();
-			if(basicDBObject.get("Task_Status").equals("Completed")){
+			if(basicDBObject.get("Task_Status").equals("Completed") || basicDBObject.get("Task_Status").equals("completed")){
 				completed_tasks++;
-			}else if(basicDBObject.get("Task_Status").equals("Requested")){
+			}else if(basicDBObject.get("Task_Status").equals("Requested") || basicDBObject.get("Task_Status").equals("requested")){
 				requested_tasks++;
-			}else if(basicDBObject.get("Task_Status").equals("In Progress")){
+			}else if(basicDBObject.get("Task_Status").equals("In Progress") || basicDBObject.get("Task_Status").equals("in progress")){
 				inprogress_tasks++;
 			}
 		}
