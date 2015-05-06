@@ -320,7 +320,6 @@ app.controller('projectController',
 					$scope.hideTextOnly = new Array();
 					
 					
-					
 					console.log("l "+displayData.length);
 					for(var n=0; n<displayData.length; n++){
 						$scope.hideEdit[n] = true;
@@ -334,6 +333,8 @@ app.controller('projectController',
 					 for(var i=0; i<displayData.length; i++){
 				    	console.log("displayData "+displayData[i]);
 				    	 $scope.queue.transactions.push(displayData[i]);
+				    	 $scope.project_name = displayData[i].projectName;
+						console.log("pnam --> "+$scope.project_name);
 				    }
 					
 					 
