@@ -23,6 +23,15 @@ public class ProjectDao {
 		
 	}
 	
+	
+	public void update(Project project)
+	{
+			
+		hibernateTemplate.update(project);
+		
+	}
+	
+	
 	public void delete(Project project)
 	{
 			

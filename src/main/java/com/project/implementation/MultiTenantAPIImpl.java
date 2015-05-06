@@ -89,17 +89,11 @@ public class MultiTenantAPIImpl {
 			basicDBObject.clear();
 		}
 		
-		Project project = new Project();
+		Project project = projectDao.getProjectByProjectId(projectId);
 		
-		project.setProj_entry_id(apputils.generateIdValue(3000));
-		project.setProjectid(projectData.getProjectId());
 		project.setProjectname(projectData.getProjectName());
-		project.setUserid(userid);
-		project.setTenantid(projectData.getTenantId());
-		project.setUsername("TESTUSER");
 		
-		projectDao.save(project);
-		
+		projectDao.update(project);
 		
 		return insert;
 	}
@@ -130,6 +124,19 @@ public class MultiTenantAPIImpl {
 		mongoTemplate.save(basicDBObject, "tenant_data");
 				
 		basicDBObject.clear();
+		
+		Project project = new Project();
+		
+		project.setProj_entry_id(apputils.generateIdValue(3000));
+		project.setProjectid(project_Id);
+		project.setProjectname(project_name);
+		project.setUserid(user_Id);
+		project.setTenantid(Tenant_Id);
+		project.setUsername("TESTUSER");
+		
+		projectDao.save(project);
+		
+		
 		
 		return project_Id;
 	}

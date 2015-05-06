@@ -24,10 +24,18 @@ public class MultiTenantImpl{
 
 	public ArrayList<DisplayData> getProject(String projectid){
 
+		System.out.println("Proj => " + projectid);
+		
 		String tenantid = tenantFieldProjectImpl.getTenantIdByProjectId(projectid);
-
+		
+		System.out.println("Tenantid => " + tenantid);
+		
 		List<String> tables = tenantFieldProjectImpl.getAllTablesForATenant(tenantid);
+		
+		System.out.println("Size => " + tables.size());
 /*
+ * 
+ * 
 		System.out.println("Retrieved Tenand => " + tenantid);
 
 		System.out.println("Retrieved Tables => ");
