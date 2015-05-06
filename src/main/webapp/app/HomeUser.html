@@ -2,15 +2,13 @@
 <div ng-controller="homeUserController" style="padding-top:100px;">
 
 	<div class="col-md-12">
-		<div class="col-md-2">
+		<div class="col-md-4">
 		</div>
 		<div class="col-md-3">
 			<select id="projectdropdown" class="form-control" data-role="listview"  ng-model="projectdropdown" >
 				<option value="">Select Project</option>
 				<option ng-repeat="project in projectlist track by $index" value="{{project.projectid}}">{{project.projectid +" : "+ project.projectname}}</option>
 	        </select>
-		</div>
-		<div class="col-md-2">
 		</div>
 		<div class="col-md-3">
 			<span class="input-group-btn">
@@ -22,15 +20,13 @@
 	</div>
 	
 	<div class="col-md-12" style="padding-top:100px">
-		<div class="col-md-2">
+		<div class="col-md-4">
 		</div>
 		<div class="col-md-3">
 			<select id="tenantdropdown" class="form-control" data-role="listview" ng-model="tenantdropdown" >
 				<option value="">Select Tenant</option>
 					<option ng-repeat="tenant in tenantlist track by $index" value="{{tenantlist[$index]}}">{{tenantlist[$index]}}</option>
 	        </select>
-		</div>
-		<div class="col-md-2">
 		</div>
 		<div class="col-md-3">
 			<span class="input-group-btn">

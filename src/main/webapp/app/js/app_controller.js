@@ -106,12 +106,9 @@ app.controller('homeController', function($scope, $http, $location, $q,
 					$location.url('/home');
 				});
 		response.error(function(data, status, headers, config) {
-			if (response.status === 401
-					|| response.status === 400) {
-				$scope.loginform_error = "Invalid request";
-				$location.url('/');
-				return $q.reject(response);
-			}
+			$scope.error = "Invalid username/password";
+			$location.url('/');
+			return $q.reject(response);
 		});
 	
 	};

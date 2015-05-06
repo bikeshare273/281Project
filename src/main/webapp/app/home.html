@@ -1,4 +1,4 @@
-<div ng-controller="homeController" class="backgroundImage" ng-style="{{image_path1}}">
+<div ng-controller="homeController" >
 
 
     <div class="container" id="loginbox">
@@ -36,10 +36,20 @@
         <div style="text-align:center; ">
         	<a ng-click="clickRegister()" style='color: black'>Dont have account? Register Now!!</a>
        	</div>
+
+
+	<!-- error and success message -->
+       	<div>
+			<div class="" style="position:relative;padding-top:1%; padding-left:60px; color: red;">
+				{{ error }}
+			</div>
+			<div class="" style="position:relative;padding-top:1%;  padding-left:60px; color:green;">
+				{{success}}
+			</div>
+		</div>
       </form>
 
     </div> <!-- /container -->
-
 
 </div>
 
