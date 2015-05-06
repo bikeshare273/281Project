@@ -41,7 +41,7 @@ public class MultiTenantAPIImpl {
 	private String key;
 	private StringBuilder json;
 	
-	public boolean updateProject(ProjectData projectData){
+	public boolean updateProject(ProjectData projectData, int userid){
 
 		boolean insert = false;
 		String projectId = projectData.getProjectId();
@@ -89,6 +89,18 @@ public class MultiTenantAPIImpl {
 			basicDBObject.clear();
 		}
 		
+		Project project = new Project();
+		
+		project.setProj_entry_id(apputils.generateIdValue(3000));
+		project.setProjectid(projectData.getProjectId());
+		project.setProjectname(projectData.getProjectName());
+		project.setUserid(userid);
+		project.setTenantid(projectData.getTenantId());
+		project.setUsername("TESTUSER");
+		
+		projectDao.save(project);
+		
+		
 		return insert;
 	}
 	
@@ -116,17 +128,6 @@ public class MultiTenantAPIImpl {
 		basicDBObject.put("Tenant_Data", dbObject);
 		
 		mongoTemplate.save(basicDBObject, "tenant_data");
-
-		Project project = new Project();
-		
-		project.setProj_entry_id(apputils.generateIdValue(3000));
-		project.setProjectid(project_Id);
-		project.setProjectname(project_name);
-		project.setUserid(user_Id);
-		project.setTenantid(Tenant_Id);
-		project.setUsername("TESTUSER");
-		
-		projectDao.save(project);
 				
 		basicDBObject.clear();
 		

@@ -192,7 +192,7 @@ public ProjectData createProject(@RequestBody NewProjectDTO newProjectDTO, @Cook
 @ResponseStatus(HttpStatus.CREATED)
 @RequestMapping(value = "/updateproject", method = RequestMethod.POST)
 @ResponseBody
-public boolean Project(@RequestBody ProjectData projectData) {	
+public boolean Project(@RequestBody ProjectData projectData, @CookieValue ("userid") int userid) {	
 	
 /*	ProjectData projectData = new ProjectData();
 	ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String,String>>();	
@@ -220,7 +220,7 @@ public boolean Project(@RequestBody ProjectData projectData) {
 
 	projectData.setRows(arrayList);*/
 	
-	return apiImpl.updateProject(projectData);	
+	return apiImpl.updateProject(projectData, userid);	
 }
 
 
